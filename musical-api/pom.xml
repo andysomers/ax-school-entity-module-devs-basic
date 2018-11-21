@@ -11,5 +11,15 @@
 
 	<artifactId>musical-api</artifactId>
 
+<dependencies>
+	<dependency>
+		<groupId>com.foreach.across.modules</groupId>
+		<artifactId>across-hibernate-module</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>com.foreach.across.modules</groupId>
+		<artifactId>entity-module</artifactId>
+	</dependency>
+</dependencies>
 
 </project>

@@ -1,6 +1,6 @@
 package it;
 
-import com.foreach.across.samples.entity.BookingApplication;
+import com.foreach.across.samples.booking.BookingApplication;
 import com.foreach.across.test.support.config.MockAcrossServletContextInitializer;
 import com.foreach.across.test.support.config.MockMvcConfiguration;
 import org.junit.Test;
