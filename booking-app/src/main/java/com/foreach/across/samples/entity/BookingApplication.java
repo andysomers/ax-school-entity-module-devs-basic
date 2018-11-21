@@ -1,9 +1,6 @@
 package com.foreach.across.samples.entity;
 
 import com.foreach.across.config.AcrossApplication;
-import com.foreach.across.modules.applicationinfo.ApplicationInfoModule;
-import com.foreach.across.modules.debugweb.DebugWebModule;
-import com.foreach.across.modules.logging.LoggingModule;
 import com.foreach.across.modules.web.AcrossWebModule;
 import org.springframework.boot.SpringApplication;
 
@@ -11,10 +8,7 @@ import java.util.Collections;
 
 @AcrossApplication(
 		modules = {
-				AcrossWebModule.NAME,
-				DebugWebModule.NAME,
-				LoggingModule.NAME,
-				ApplicationInfoModule.NAME
+				AcrossWebModule.NAME
 		}
 )
 public class BookingApplication
