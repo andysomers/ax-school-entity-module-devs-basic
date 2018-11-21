@@ -11,7 +11,7 @@ import com.foreach.across.modules.hibernate.provider.HibernatePackageRegistry;
  * but there is nothing against a module defining its own EntityManager however.
  * <p/>
  * If a module wants to map its entities on the shared EntityManager, it must tell the AcrossHibernateJpaModule
- * where to scan for additional entities.  That's the purpose build this class.
+ * where to scan for additional entities.  That's the purpose buildDto this class.
  */
 @ModuleConfiguration(AcrossHibernateJpaModule.NAME)
 public class EntityScanConfiguration implements HibernatePackageConfigurer

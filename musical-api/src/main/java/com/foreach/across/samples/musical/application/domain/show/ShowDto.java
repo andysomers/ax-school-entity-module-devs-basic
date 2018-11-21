@@ -10,7 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
-public class ShowResponse {
+public class ShowDto {
     private Long id;
     private String name;
 }

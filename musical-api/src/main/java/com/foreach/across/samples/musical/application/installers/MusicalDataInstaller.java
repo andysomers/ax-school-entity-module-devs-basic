@@ -21,7 +21,6 @@ import java.util.List;
 )
 @RequiredArgsConstructor
 public class MusicalDataInstaller {
-    private final ShowRepository showRepository;
     private final MusicalRepository musicalRepository;
 
     @InstallerMethod
@@ -30,10 +29,9 @@ public class MusicalDataInstaller {
 
         zombieKidShows.add(Show.builder().name("Brussel").build());
         zombieKidShows.add(Show.builder().name("Antwerpen").build());
-        showRepository.save(zombieKidShows);
 
         Musical zombieKids = Musical.builder()
-                .name("ZombieKids")
+                .name("Smurfen de Musical")
                 .shows(zombieKidShows)
                 .build();
 

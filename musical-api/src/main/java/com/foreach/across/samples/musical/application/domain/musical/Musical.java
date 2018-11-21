@@ -36,7 +36,7 @@ public class Musical extends SettableIdBasedEntity<Musical> {
     @Column(name = "name")
     private String name;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "show_id")
     private List<Show> shows;
 }
