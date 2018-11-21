@@ -11,4 +11,24 @@
 
 	<artifactId>booking-app</artifactId>
 
+	<dependencies>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.foreach.across.modules</groupId>
+			<artifactId>admin-web-module</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.foreach.across.modules</groupId>
+			<artifactId>entity-module</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.foreach.across.modules</groupId>
+			<artifactId>across-hibernate-module</artifactId>
+		</dependency>
+	</dependencies>
 </project>
