@@ -1,0 +1,13 @@
+applicationInfo:
+  applicationId: booking
+  applicationName: Booking
+
+debugWebModule:
+  root-path: /debug
+  security:
+    password: booking-changeme
+
+logging:
+  request-response:
+    enabled: true
+
