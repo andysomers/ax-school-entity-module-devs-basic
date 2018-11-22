@@ -19,12 +19,12 @@ import java.time.ZonedDateTime;
 @Builder(toBuilder = true)
 public class Invoice extends SettableIdBasedEntity<Invoice> {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_sample_show_id")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_sample_invoice_id")
     @GenericGenerator(
-            name = "seq_sample_show_id",
+            name = "seq_sample_invoice_id",
             strategy = AcrossSequenceGenerator.STRATEGY,
             parameters = {
-                    @org.hibernate.annotations.Parameter(name = "sequenceName", value = "seq_sample_show_id"),
+                    @org.hibernate.annotations.Parameter(name = "sequenceName", value = "seq_sample_invoice_id"),
                     @org.hibernate.annotations.Parameter(name = "allocationSize", value = "1")
             }
     )
