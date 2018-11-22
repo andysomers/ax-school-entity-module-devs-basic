@@ -23,3 +23,6 @@ acrossHibernate:
 
 adminWebModule:
   title: "AX School: EntityModule"
+
+musicalService:
+  url: http://localhost:8099
