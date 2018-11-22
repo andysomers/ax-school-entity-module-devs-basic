@@ -1,13 +1,13 @@
 package com.foreach.across.samples.booking.application.domain.musical;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import lombok.*;
 
 @Data
-@AllArgsConstructor
+@JsonDeserialize(using = MusicalIdDeserializer.class)
 public class MusicalId
 {
-	private String id;
+	private final String id;
 
 	public static MusicalId of( String id ) {
 		return new MusicalId( id );
