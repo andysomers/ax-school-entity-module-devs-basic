@@ -3,6 +3,7 @@ package com.foreach.across.samples.booking.application.domain.booking;
 import com.foreach.across.modules.hibernate.business.EntityWithDto;
 import lombok.*;
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.domain.Persistable;
 
@@ -12,6 +13,7 @@ import javax.persistence.Id;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.time.ZonedDateTime;
 
 /**
  * A single show booking.
@@ -30,10 +32,12 @@ public class Booking implements Persistable<Long>, EntityWithDto<Booking>
 	private Long id;
 
 	@NotBlank
+	@Length(max = 255)
 	private String name;
 
 	@NotBlank
 	@Email
+	@Length(max = 255)
 	private String email;
 
 	@Min(1)
@@ -43,6 +47,8 @@ public class Booking implements Persistable<Long>, EntityWithDto<Booking>
 
 	@NotNull
 	private TicketType ticketType;
+
+	private ZonedDateTime created;
 
 	@Override
 	public Booking toDto() {
