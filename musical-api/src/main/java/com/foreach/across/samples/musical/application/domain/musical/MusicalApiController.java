@@ -11,12 +11,11 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class MusicalApiController {
     private final MusicalRepository musicalRepository;
-    private final MusicalDtoBuilder musicalDtoBuilder;
 
     @RequestMapping(method = RequestMethod.GET)
     public List<MusicalDto> getMusicals() {
         return musicalRepository.findAll().stream()
-                .map(musicalDtoBuilder::buildDto)
+                .map(MusicalDto::from)
                 .collect(Collectors.toList());
     }
 
@@ -24,24 +23,26 @@ public class MusicalApiController {
     public MusicalDto getMusicalById(@PathVariable Long id) {
         Musical musical = musicalRepository.findOne(id);
 
-        return musicalDtoBuilder.buildDto(musical);
+        return MusicalDto.from(musical);
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public MusicalDto createMusical(@RequestBody MusicalDto musicalDto) {
-        Musical musical = musicalDtoBuilder.buildEntity(musicalDto);
+        Musical musical = musicalDto.toMusical();
 
-        musical = musicalRepository.saveAndFlush(musical);
+        musical = musicalRepository.save(musical);
 
-        return musicalDtoBuilder.buildDto(musical);
+        return MusicalDto.from(musical);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
     public MusicalDto updateMusical(@RequestBody MusicalDto musicalDto) {
-        Musical musical = musicalDtoBuilder.buildEntity(musicalDto);
+        Musical musical = musicalRepository.findOne(musicalDto.getId());
+        musical.setName(musicalDto.getName());
 
-        musicalRepository.save(musical);
-        return musicalDto;
+        musical = musicalRepository.save(musical);
+
+        return MusicalDto.from(musical);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, path = "/{id}")

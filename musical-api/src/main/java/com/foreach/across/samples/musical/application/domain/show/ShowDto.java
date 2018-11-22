@@ -13,4 +13,18 @@ import java.util.List;
 public class ShowDto {
     private Long id;
     private String name;
+
+    public static ShowDto from(Show show) {
+        return ShowDto.builder()
+                .id(show.getId())
+                .name(show.getName())
+                .build();
+    }
+
+    public Show toShow() {
+        return Show.builder()
+                .id(this.getId())
+                .name(this.getName())
+                .build();
+    }
 }

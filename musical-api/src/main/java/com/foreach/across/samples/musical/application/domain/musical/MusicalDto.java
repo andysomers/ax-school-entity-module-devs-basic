@@ -4,6 +4,7 @@ import com.foreach.across.samples.musical.application.domain.show.ShowDto;
 import lombok.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Getter
@@ -14,5 +15,23 @@ import java.util.List;
 public class MusicalDto {
     private Long id;
     private String name;
-    private List<ShowDto> shows;
+
+    public static MusicalDto from(Musical musical) {
+        if (musical == null) {
+            return null;
+        }
+
+        return MusicalDto.builder()
+                .id(musical.getId())
+                .name(musical.getName())
+                .build();
+
+    }
+
+    public Musical toMusical() {
+        return Musical.builder()
+                .id(this.getId())
+                .name(this.getName())
+                .build();
+    }
 }
