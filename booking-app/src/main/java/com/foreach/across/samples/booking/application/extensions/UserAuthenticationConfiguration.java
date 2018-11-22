@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.foreach.across.samples.entity.application.extensions;
+package com.foreach.across.samples.booking.application.extensions;
 
 import com.foreach.across.core.annotations.ModuleConfiguration;
 import com.foreach.across.modules.spring.security.SpringSecurityModule;

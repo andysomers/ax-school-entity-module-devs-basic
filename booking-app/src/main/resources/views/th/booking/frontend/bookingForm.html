@@ -1,0 +1,46 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Booking form</title>
+</head>
+<body th:fragment="content">
+
+<h1>Book tickets for our musical</h1>
+
+<form th:action="@{/}" method="post" th:object="${booking}">
+
+    <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+        <p th:each="e : ${#fields.detailedErrors()}" th:class="${e.global}? globalerr : fielderr">
+            <span th:text="${e.global}? '*' : ${e.fieldName}">The field name</span>: <span th:text="${e.message}">The error message</span>
+        </p>
+    </div>
+
+    <div class="form-group">
+        <label for="name">Name *</label>
+        <input id="name" type="text" class="form-control" th:field="*{name}"/>
+    </div>
+
+    <div class="form-group">
+        <label for="email">Email *</label>
+        <input id="email" type="text" class="form-control" th:field="*{email}"/>
+    </div>
+
+    <div class="form-group">
+        <label for="ticketType">Type of tickets</label>
+        <select id="ticketType" class="form-control" th:field="*{ticketType}">
+            <option th:each="type : ${ticketTypes}"
+                    th:value="${type}"
+                    th:text="#{${'ticketType.' + type}}">Wireframe</option>
+        </select>
+
+    </div>
+
+    <div class="form-group">
+        <label for="tickets">Number of tickets</label>
+        <input id="tickets" type="text" class="form-control" th:field="*{numberOfTickets}"/>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Book tickets</button>
+</form>
+
+</body>
+</html>
