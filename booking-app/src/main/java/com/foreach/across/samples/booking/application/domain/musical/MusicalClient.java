@@ -23,7 +23,7 @@ public class MusicalClient {
         this.musicalServiceUrl = musicalServiceUrl;
     }
 
-	public ResponseEntity<List<Musical>> getAllMusicals() {
+	public List<Musical> getAllMusicals() {
         try {
             return restTemplate.exchange(
 		            buildMusicalBaseUrl(),
@@ -31,7 +31,7 @@ public class MusicalClient {
 		            null,
 		            new ParameterizedTypeReference<List<Musical>>()
 		            {
-                    });
+                    }).getBody();
         } catch (RestClientException e) {
             e.printStackTrace();
         }
@@ -39,13 +39,13 @@ public class MusicalClient {
         return null;
     }
 
-	public ResponseEntity<Musical> getMusical( MusicalId musicalId ) {
+	public Musical getMusical( MusicalId musicalId ) {
         try {
             return restTemplate.exchange(
 		            String.format( buildMusicalBaseUrl().concat( "/%s" ), musicalId.getId() ),
 		            HttpMethod.GET,
 		            null,
-		            Musical.class );
+		            Musical.class ).getBody();
         } catch (RestClientException e) {
             e.printStackTrace();
         }
@@ -53,7 +53,7 @@ public class MusicalClient {
         return null;
     }
 
-	public ResponseEntity<Musical> createMusical( Musical musical ) {
+	public Musical createMusical( Musical musical ) {
         try {
 	        HttpEntity<Musical> request = new HttpEntity<>( musical );
 
@@ -61,7 +61,7 @@ public class MusicalClient {
 		            buildMusicalBaseUrl(),
 		            HttpMethod.POST,
 		            request,
-		            Musical.class );
+		            Musical.class ).getBody();
         } catch (RestClientException e) {
             e.printStackTrace();
         }
@@ -69,7 +69,7 @@ public class MusicalClient {
         return null;
     }
 
-	public ResponseEntity<Musical> updateMusical( Musical musical ) {
+	public Musical updateMusical( Musical musical ) {
         try {
 	        HttpEntity<Musical> request = new HttpEntity<>( musical );
 
@@ -77,7 +77,7 @@ public class MusicalClient {
 		            buildMusicalBaseUrl(),
 		            HttpMethod.PUT,
 		            request,
-		            Musical.class );
+		            Musical.class ).getBody();
         } catch (RestClientException e) {
             e.printStackTrace();
         }
@@ -85,13 +85,13 @@ public class MusicalClient {
         return null;
     }
 
-	public ResponseEntity deleteMusical( MusicalId musicalId ) {
+	public Musical deleteMusical( MusicalId musicalId ) {
         try {
             return restTemplate.exchange(
 		            String.format( buildMusicalBaseUrl().concat( "/%s" ), musicalId.getId() ),
 		            HttpMethod.DELETE,
 		            null,
-		            ResponseEntity.class);
+                    Musical.class).getBody();
         } catch (RestClientException e) {
             e.printStackTrace();
         }

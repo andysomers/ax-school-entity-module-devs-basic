@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -25,7 +26,7 @@ public class MusicalApiController {
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/{id}")
-    public ResponseEntity<MusicalDto> getMusicalById(@PathVariable Long id) {
+    public ResponseEntity<MusicalDto> getMusicalById(@PathVariable UUID id) {
         Musical musical = musicalRepository.findOne(id);
 
         return ResponseEntity.ok(
@@ -58,7 +59,7 @@ public class MusicalApiController {
     }
 
     @RequestMapping(method = RequestMethod.DELETE, path = "/{id}")
-    public void deleteMusicalById(@PathVariable Long id) {
+    public void deleteMusicalById(@PathVariable UUID id) {
         musicalRepository.delete(id);
     }
 }

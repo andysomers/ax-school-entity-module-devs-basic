@@ -7,9 +7,9 @@ import lombok.Data;
 @AllArgsConstructor
 public class MusicalId
 {
-	private Long id;
+	private String id;
 
-	public static MusicalId of( Long id ) {
+	public static MusicalId of( String id ) {
 		return new MusicalId( id );
 	}
 }

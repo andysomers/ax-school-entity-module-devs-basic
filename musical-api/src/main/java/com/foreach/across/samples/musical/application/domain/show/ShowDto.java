@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import java.time.ZonedDateTime;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -12,16 +13,13 @@ import java.time.ZonedDateTime;
 @Builder(toBuilder = true)
 public class ShowDto
 {
-	private Long id;
-
+	private UUID id;
 	private String location;
-
 	private String city;
 
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
 	private ZonedDateTime time;
-
-	private Long musicalId;
+	private UUID musicalId;
 
 	public static ShowDto from( Show show ) {
 		return ShowDto.builder()

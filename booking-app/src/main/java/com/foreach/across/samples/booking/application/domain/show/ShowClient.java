@@ -25,7 +25,7 @@ public class ShowClient
 		this.musicalServiceUrl = musicalServiceUrl;
 	}
 
-	public ResponseEntity<List<Show>> getAllShows() {
+	public List<Show> getAllShows() {
 		try {
 			return restTemplate.exchange(
 					buildShowBaseUrl(),
@@ -33,7 +33,7 @@ public class ShowClient
 					null,
 					new ParameterizedTypeReference<List<Show>>()
 					{
-					} );
+					} ).getBody();
 		}
 		catch ( RestClientException e ) {
 			e.printStackTrace();
@@ -42,7 +42,7 @@ public class ShowClient
 		return null;
 	}
 
-	public ResponseEntity<List<Show>> getShow( ShowId showId ) {
+	public List<Show> getShow( ShowId showId ) {
 		try {
 			return restTemplate.exchange(
 					String.format( buildShowBaseUrl().concat( "/%s" ), showId.getId() ),
@@ -50,7 +50,7 @@ public class ShowClient
 					null,
 					new ParameterizedTypeReference<List<Show>>()
 					{
-					} );
+					} ).getBody();
 		}
 		catch ( RestClientException e ) {
 			e.printStackTrace();
@@ -59,7 +59,7 @@ public class ShowClient
 		return null;
 	}
 
-	public ResponseEntity<List<Show>> deleteShow( ShowId showId ) {
+	public List<Show> deleteShow( ShowId showId ) {
 		try {
 			return restTemplate.exchange(
 					String.format( buildShowBaseUrl().concat( "/%s" ), showId ),
@@ -67,7 +67,7 @@ public class ShowClient
 					null,
 					new ParameterizedTypeReference<List<Show>>()
 					{
-					} );
+					} ).getBody();
 		}
 		catch ( RestClientException e ) {
 			e.printStackTrace();
@@ -76,7 +76,7 @@ public class ShowClient
 		return null;
 	}
 
-	public ResponseEntity<List<Show>> getAllShowsForMusical( MusicalId musicalId ) {
+	public List<Show> getAllShowsForMusical( MusicalId musicalId ) {
 		try {
 			return restTemplate.exchange(
 					buildMusicalShowsBaseUrl( musicalId ),
@@ -84,7 +84,7 @@ public class ShowClient
 					null,
 					new ParameterizedTypeReference<List<Show>>()
 					{
-					} );
+					} ).getBody();
 		}
 		catch ( RestClientException e ) {
 			e.printStackTrace();
@@ -93,7 +93,7 @@ public class ShowClient
 		return null;
 	}
 
-	public ResponseEntity<List<Show>> getShowForMusical( MusicalId musicalId, ShowId showId ) {
+	public List<Show> getShowForMusical( MusicalId musicalId, ShowId showId ) {
 		try {
 			return restTemplate.exchange(
 					String.format( buildMusicalShowsBaseUrl( musicalId ).concat( "/%s" ), showId ),
@@ -101,7 +101,7 @@ public class ShowClient
 					null,
 					new ParameterizedTypeReference<List<Show>>()
 					{
-					} );
+					} ).getBody();
 		}
 		catch ( RestClientException e ) {
 			e.printStackTrace();
@@ -110,7 +110,7 @@ public class ShowClient
 		return null;
 	}
 
-	public ResponseEntity<List<Show>> createShowForMusical( Show show ) {
+	public List<Show> createShowForMusical( Show show ) {
 		try {
 			HttpEntity<Show> request = new HttpEntity<>( show );
 
@@ -120,7 +120,7 @@ public class ShowClient
 					request,
 					new ParameterizedTypeReference<List<Show>>()
 					{
-					} );
+					} ).getBody();
 		}
 		catch ( RestClientException e ) {
 			e.printStackTrace();
@@ -129,7 +129,7 @@ public class ShowClient
 		return null;
 	}
 
-	public ResponseEntity<List<Show>> updateShowForMusical( Show show ) {
+	public List<Show> updateShowForMusical( Show show ) {
 		try {
 			HttpEntity<Show> request = new HttpEntity<>( show );
 
@@ -139,7 +139,7 @@ public class ShowClient
 					request,
 					new ParameterizedTypeReference<List<Show>>()
 					{
-					} );
+					} ).getBody();
 		}
 		catch ( RestClientException e ) {
 			e.printStackTrace();
