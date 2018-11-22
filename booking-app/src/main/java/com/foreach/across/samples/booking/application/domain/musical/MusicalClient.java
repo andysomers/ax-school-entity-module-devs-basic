@@ -1,6 +1,5 @@
 package com.foreach.across.samples.booking.application.domain.musical;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -100,6 +99,6 @@ public class MusicalClient {
     }
 
     private String buildMusicalBaseUrl() {
-        return musicalServiceUrl.concat("/api/musical");
+	    return musicalServiceUrl.concat( "/api/musicals" );
     }
 }
