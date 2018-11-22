@@ -1,6 +1,6 @@
 package com.foreach.across.samples.booking.application.domain.show;
 
-import com.foreach.across.samples.booking.application.domain.musical.Musical;
+import com.foreach.across.samples.booking.application.domain.musical.MusicalId;
 import lombok.*;
 
 import java.time.ZonedDateTime;
@@ -15,5 +15,5 @@ public class Show {
     private String location;
 	private String city;
     private ZonedDateTime time;
-	private Musical musical;
+	private MusicalId musicalId;
 }
