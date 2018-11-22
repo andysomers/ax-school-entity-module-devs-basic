@@ -16,6 +16,9 @@ import java.util.Set;
 public class InvoiceModule extends AcrossModule {
     public static final String NAME = "WebCmsModule";
 
+    public InvoiceModule() {
+    }
+
     @Override
     public String getName() {
         return NAME;
