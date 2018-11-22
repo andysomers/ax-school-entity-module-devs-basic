@@ -15,8 +15,16 @@ public class ShowApiController
 {
 	private final ShowRepository showRepository;
 
+	@GetMapping("/shows/{showId}")
+	public ResponseEntity<ShowDto> getShow( @PathVariable("showId") Show show ) {
+		if ( show == null ) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok( ShowDto.from( show ) );
+	}
+
 	@GetMapping("/musicals/{musical}/shows/{showId}")
-	public ResponseEntity<ShowDto> getShow( @PathVariable("musical") Musical musical, @PathVariable("showId") Long showId ) {
+	public ResponseEntity<ShowDto> getShowByMusical( @PathVariable("musical") Musical musical, @PathVariable("showId") Long showId ) {
 		Show show = showRepository.findOneByIdAndMusical( showId, musical );
 		if ( show == null ) {
 			return ResponseEntity.notFound().build();
@@ -25,7 +33,7 @@ public class ShowApiController
 	}
 
 	@GetMapping("/musicals/{musical}/shows")
-	public ResponseEntity<List<ShowDto>> getShows( @PathVariable("musical") Musical musical ) {
+	public ResponseEntity<List<ShowDto>> getShowsByMusical( @PathVariable("musical") Musical musical ) {
 		if ( musical == null ) {
 			return ResponseEntity.notFound().build();
 		}
@@ -39,6 +47,7 @@ public class ShowApiController
 	@PostMapping("/musicals/{musical}/shows")
 	public ResponseEntity<ShowDto> createShow( @PathVariable("musical") Musical musical, ShowDto showDto ) {
 		Show show = showDto.toShow();
+		show.setMusical( musical );
 		return ResponseEntity.ok( ShowDto.from( show ) );
 	}
 
