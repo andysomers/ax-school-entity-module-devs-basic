@@ -1,5 +1,7 @@
 package com.foreach.across.samples.musical.application.domain.musical;
 
+import com.foreach.across.samples.musical.application.domain.show.ShowDto;
+import com.foreach.across.samples.musical.application.domain.show.ShowRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +14,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class MusicalApiController {
     private final MusicalRepository musicalRepository;
+    private final ShowRepository showRepository;
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<MusicalDto>> getMusicals() {
@@ -46,6 +49,7 @@ public class MusicalApiController {
     public ResponseEntity<MusicalDto> updateMusical(@RequestBody MusicalDto musicalDto) {
         Musical musical = musicalRepository.findOne(musicalDto.getId());
         musical.setName(musicalDto.getName());
+        musical.setDescription(musicalDto.getDescription());
 
         musical = musicalRepository.save(musical);
 

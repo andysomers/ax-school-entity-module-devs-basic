@@ -16,3 +16,5 @@ spring:
     url: "jdbc:h2:./local-data/db/booking-db"
     username: sa
 
+musicalService:
+  url: http://localhost:8099
