@@ -30,7 +30,7 @@ public class Invoice extends SettableIdBasedEntity<Invoice> {
     )
     private Long id;
 
-    @NotBlank
+	@NotNull
     @Column(name = "amount")
     private Double amount;
 
