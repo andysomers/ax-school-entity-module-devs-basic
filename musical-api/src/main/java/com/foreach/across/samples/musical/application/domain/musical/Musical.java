@@ -41,7 +41,6 @@ public class Musical extends SettableIdBasedEntity<Musical> {
     @Column(name = "description")
     private String description;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "show_id")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "musical")
     private List<Show> shows;
 }
