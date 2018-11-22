@@ -1,4 +1,29 @@
 acrossHibernate:
   create-unit-of-work-factory: true
   hibernate-properties:
+    hibernate.format_sql: false
+    hibernate.use_sql_comments: false
+    hibernate.show_sql: false
     hibernate.hbm2ddl.auto: update
+    hibernate.jdbc.time_zone: UTC
+across:
+  development:
+    active: true
+
+server:
+  error:
+    includeStacktrace: ALWAYS
+    whitelabel:
+      enabled: false
+  port: 8099
+
+spring:
+  datasource:
+    url: "jdbc:h2:./local-data/db/musical-api-db"
+    username: sa
+  h2:
+    console:
+      enabled: true
+security:
+  basic:
+    enabled: false

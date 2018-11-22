@@ -64,7 +64,7 @@ public class TestMusicalClient
 	@Test
 	public void updateMusical() throws JsonProcessingException {
 		Musical musicalDto = Musical.builder()
-		                            .id( 1L )
+		                            .id( MusicalId.of( 1L ) )
 		                            .name( "Updated musical" )
 		                            .description( "Newly updated description" )
 		                            .build();

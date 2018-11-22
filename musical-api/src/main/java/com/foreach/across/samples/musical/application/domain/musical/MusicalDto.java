@@ -2,6 +2,8 @@ package com.foreach.across.samples.musical.application.domain.musical;
 
 import lombok.*;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -9,7 +11,7 @@ import lombok.*;
 @Builder(toBuilder = true)
 public class MusicalDto
 {
-	private Long id;
+	private UUID id;
 	private String name;
 	private String description;
 

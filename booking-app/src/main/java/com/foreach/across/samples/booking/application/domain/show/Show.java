@@ -10,10 +10,15 @@ import java.time.ZonedDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
-public class Show {
-    private Long id;
-    private String location;
+public class Show
+{
+	private ShowId id;
+	private String location;
 	private String city;
-    private ZonedDateTime time;
+	private ZonedDateTime time;
 	private MusicalId musicalId;
+
+	public void setId( Long id ) {
+		this.id = ShowId.of( id );
+	}
 }

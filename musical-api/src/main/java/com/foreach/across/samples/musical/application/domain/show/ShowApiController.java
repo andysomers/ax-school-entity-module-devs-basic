@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RequestMapping("/api")
@@ -33,13 +34,13 @@ public class ShowApiController
 	}
 
 	@DeleteMapping("/shows/{show}")
-	public ResponseEntity deleteShow( @PathVariable("show") Long showId ) {
+	public ResponseEntity deleteShow( @PathVariable("show") UUID showId ) {
 		showRepository.delete( showId );
 		return ResponseEntity.ok().build();
 	}
 
 	@GetMapping("/musicals/{musical}/shows/{showId}")
-	public ResponseEntity<ShowDto> getShowByMusical( @PathVariable("musical") Musical musical, @PathVariable("showId") Long showId ) {
+	public ResponseEntity<ShowDto> getShowByMusical( @PathVariable("musical") Musical musical, @PathVariable("showId") UUID showId ) {
 		Show show = showRepository.findOneByIdAndMusical( showId, musical );
 		if ( show == null ) {
 			return ResponseEntity.notFound().build();
@@ -68,7 +69,7 @@ public class ShowApiController
 	}
 
 	@PutMapping("/musicals/{musical}/shows/{show}")
-	public ResponseEntity<ShowDto> updateShow( @PathVariable("musical") Musical musical, @PathVariable("show") Long showId, @RequestBody ShowDto showDto ) {
+	public ResponseEntity<ShowDto> updateShow( @PathVariable("musical") Musical musical, @PathVariable("show") UUID showId, @RequestBody ShowDto showDto ) {
 		Show show = showRepository.findOneByIdAndMusical( showId, musical );
 		if ( show == null ) {
 			return ResponseEntity.notFound().build();

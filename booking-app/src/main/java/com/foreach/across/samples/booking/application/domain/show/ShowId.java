@@ -7,9 +7,9 @@ import lombok.Data;
 @AllArgsConstructor
 public class ShowId
 {
-	private Long id;
+	private String id;
 
-	public static ShowId of( Long id ) {
+	public static ShowId of( String id ) {
 		return new ShowId( id );
 	}
 }
