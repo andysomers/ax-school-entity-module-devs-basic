@@ -34,14 +34,13 @@ public class Show extends SettableIdBasedEntity<Show>
 	private Long id;
 
 	@NotBlank
-	@Length(max = 200)
-	@Column(name = "name")
-	private String name;
-
-	@NotBlank
 	@Length(max = 10000)
 	@Column(name = "location")
 	private String location;
+
+	@NotBlank
+	@Column
+	private String city;
 
 	@NotNull
 	@Column(name = "time")

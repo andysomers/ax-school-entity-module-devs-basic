@@ -1,6 +1,7 @@
 package com.foreach.across.samples.booking.application.domain.show;
 
-import lombok.RequiredArgsConstructor;
+import com.foreach.across.samples.booking.application.domain.musical.MusicalId;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -13,93 +14,145 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 @Component
-@RequiredArgsConstructor
-public class ShowClient {
-    private final RestTemplate restTemplate;
+public class ShowClient
+{
+	private final RestTemplate restTemplate;
+	private final String musicalServiceUrl;
 
-    @Value("${musicalService.url}")
-    private String musicalServiceUrl;
+	@Autowired
+	public ShowClient( RestTemplate restTemplate, @Value("${musicalService.url}") String musicalServiceUrl ) {
+		this.restTemplate = restTemplate;
+		this.musicalServiceUrl = musicalServiceUrl;
+	}
 
-    public ResponseEntity<List<ShowDto>> getAllShows() {
-        try {
-            return restTemplate.exchange(
-                    buildShowBaseUrl(),
-                    HttpMethod.GET,
-                    null,
-                    new ParameterizedTypeReference<List<ShowDto>>() {
-                    });
-        } catch (RestClientException e) {
-            e.printStackTrace();
-        }
+	public ResponseEntity<List<Show>> getAllShows() {
+		try {
+			return restTemplate.exchange(
+					buildShowBaseUrl(),
+					HttpMethod.GET,
+					null,
+					new ParameterizedTypeReference<List<Show>>()
+					{
+					} );
+		}
+		catch ( RestClientException e ) {
+			e.printStackTrace();
+		}
 
-        return null;
-    }
+		return null;
+	}
 
-    public ResponseEntity<List<ShowDto>> getShow(Long id) {
-        try {
-            return restTemplate.exchange(
-                    String.format(buildShowBaseUrl().concat("/%s"), id),
-                    HttpMethod.GET,
-                    null,
-                    new ParameterizedTypeReference<List<ShowDto>>() {
-                    });
-        } catch (RestClientException e) {
-            e.printStackTrace();
-        }
+	public ResponseEntity<List<Show>> getShow( ShowId showId ) {
+		try {
+			return restTemplate.exchange(
+					String.format( buildShowBaseUrl().concat( "/%s" ), showId.getId() ),
+					HttpMethod.GET,
+					null,
+					new ParameterizedTypeReference<List<Show>>()
+					{
+					} );
+		}
+		catch ( RestClientException e ) {
+			e.printStackTrace();
+		}
 
-        return null;
-    }
+		return null;
+	}
 
-    public ResponseEntity<List<ShowDto>> createShow(ShowDto ShowDto) {
-        try {
-            HttpEntity<ShowDto> request = new HttpEntity<>(ShowDto);
+	public ResponseEntity<List<Show>> deleteShow( ShowId showId ) {
+		try {
+			return restTemplate.exchange(
+					String.format( buildShowBaseUrl().concat( "/%s" ), showId ),
+					HttpMethod.DELETE,
+					null,
+					new ParameterizedTypeReference<List<Show>>()
+					{
+					} );
+		}
+		catch ( RestClientException e ) {
+			e.printStackTrace();
+		}
 
-            return restTemplate.exchange(
-                    buildShowBaseUrl(),
-                    HttpMethod.POST,
-                    request,
-                    new ParameterizedTypeReference<List<ShowDto>>() {
-                    });
-        } catch (RestClientException e) {
-            e.printStackTrace();
-        }
+		return null;
+	}
 
-        return null;
-    }
+	public ResponseEntity<List<Show>> getAllShowsForMusical( MusicalId musicalId ) {
+		try {
+			return restTemplate.exchange(
+					buildMusicalShowsBaseUrl( musicalId ),
+					HttpMethod.GET,
+					null,
+					new ParameterizedTypeReference<List<Show>>()
+					{
+					} );
+		}
+		catch ( RestClientException e ) {
+			e.printStackTrace();
+		}
 
-    public ResponseEntity<List<ShowDto>> updateShow(ShowDto ShowDto) {
-        try {
-            HttpEntity<ShowDto> request = new HttpEntity<>(ShowDto);
+		return null;
+	}
 
-            return restTemplate.exchange(
-                    buildShowBaseUrl(),
-                    HttpMethod.PUT,
-                    request,
-                    new ParameterizedTypeReference<List<ShowDto>>() {
-                    });
-        } catch (RestClientException e) {
-            e.printStackTrace();
-        }
+	public ResponseEntity<List<Show>> getShowForMusical( MusicalId musicalId, ShowId showId ) {
+		try {
+			return restTemplate.exchange(
+					String.format( buildMusicalShowsBaseUrl( musicalId ).concat( "/%s" ), showId ),
+					HttpMethod.GET,
+					null,
+					new ParameterizedTypeReference<List<Show>>()
+					{
+					} );
+		}
+		catch ( RestClientException e ) {
+			e.printStackTrace();
+		}
 
-        return null;
-    }
+		return null;
+	}
 
-    public ResponseEntity<List<ShowDto>> deleteShow(Long id) {
-        try {
-            return restTemplate.exchange(
-                    String.format(buildShowBaseUrl().concat("/%s"), id),
-                    HttpMethod.DELETE,
-                    null,
-                    new ParameterizedTypeReference<List<ShowDto>>() {
-                    });
-        } catch (RestClientException e) {
-            e.printStackTrace();
-        }
+	public ResponseEntity<List<Show>> createShowForMusical( Show show ) {
+		try {
+			HttpEntity<Show> request = new HttpEntity<>( show );
 
-        return null;
-    }
+			return restTemplate.exchange(
+					buildMusicalShowsBaseUrl( show.getMusicalId() ).concat( "/shows" ),
+					HttpMethod.POST,
+					request,
+					new ParameterizedTypeReference<List<Show>>()
+					{
+					} );
+		}
+		catch ( RestClientException e ) {
+			e.printStackTrace();
+		}
 
-    private String buildShowBaseUrl() {
-        return musicalServiceUrl.concat("/api/show");
-    }
+		return null;
+	}
+
+	public ResponseEntity<List<Show>> updateShowForMusical( Show show ) {
+		try {
+			HttpEntity<Show> request = new HttpEntity<>( show );
+
+			return restTemplate.exchange(
+					buildMusicalShowsBaseUrl( show.getMusicalId() ).concat( "/shows" ),
+					HttpMethod.PUT,
+					request,
+					new ParameterizedTypeReference<List<Show>>()
+					{
+					} );
+		}
+		catch ( RestClientException e ) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+	private String buildShowBaseUrl() {
+		return musicalServiceUrl.concat( "/api/shows" );
+	}
+
+	private String buildMusicalShowsBaseUrl( MusicalId musicalId ) {
+		return String.format( musicalServiceUrl.concat( "/api/musicals/%s" ), musicalId.getId() );
+	}
 }

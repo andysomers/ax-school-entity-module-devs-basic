@@ -1,6 +1,5 @@
 package com.foreach.across.samples.musical.application.domain.musical;
 
-import com.foreach.across.samples.musical.application.domain.show.ShowDto;
 import com.foreach.across.samples.musical.application.domain.show.ShowRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(path = "/api/musical")
+@RequestMapping(path = "/api/musicals")
 @RequiredArgsConstructor
 public class MusicalApiController {
     private final MusicalRepository musicalRepository;

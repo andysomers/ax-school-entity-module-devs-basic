@@ -1,6 +1,5 @@
 package com.foreach.across.samples.booking.application.domain.musical;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -24,13 +23,14 @@ public class MusicalClient {
         this.musicalServiceUrl = musicalServiceUrl;
     }
 
-    public ResponseEntity<List<MusicalDto>> getAllMusicals() {
+	public ResponseEntity<List<Musical>> getAllMusicals() {
         try {
             return restTemplate.exchange(
-                    buildMusicalBaseUrl(),
-                    HttpMethod.GET,
-                    null,
-                    new ParameterizedTypeReference<List<MusicalDto>>() {
+		            buildMusicalBaseUrl(),
+		            HttpMethod.GET,
+		            null,
+		            new ParameterizedTypeReference<List<Musical>>()
+		            {
                     });
         } catch (RestClientException e) {
             e.printStackTrace();
@@ -39,13 +39,13 @@ public class MusicalClient {
         return null;
     }
 
-    public ResponseEntity<MusicalDto> getMusical(Long id) {
+	public ResponseEntity<Musical> getMusical( MusicalId musicalId ) {
         try {
             return restTemplate.exchange(
-                    String.format(buildMusicalBaseUrl().concat("/%s"), id),
-                    HttpMethod.GET,
-                    null,
-                    MusicalDto.class);
+		            String.format( buildMusicalBaseUrl().concat( "/%s" ), musicalId.getId() ),
+		            HttpMethod.GET,
+		            null,
+		            Musical.class );
         } catch (RestClientException e) {
             e.printStackTrace();
         }
@@ -53,15 +53,15 @@ public class MusicalClient {
         return null;
     }
 
-    public ResponseEntity<MusicalDto> createMusical(MusicalDto musicalDto) {
+	public ResponseEntity<Musical> createMusical( Musical musical ) {
         try {
-            HttpEntity<MusicalDto> request = new HttpEntity<>(musicalDto);
+	        HttpEntity<Musical> request = new HttpEntity<>( musical );
 
             return restTemplate.exchange(
-                    buildMusicalBaseUrl(),
-                    HttpMethod.POST,
-                    request,
-                    MusicalDto.class);
+		            buildMusicalBaseUrl(),
+		            HttpMethod.POST,
+		            request,
+		            Musical.class );
         } catch (RestClientException e) {
             e.printStackTrace();
         }
@@ -69,15 +69,15 @@ public class MusicalClient {
         return null;
     }
 
-    public ResponseEntity<MusicalDto> updateMusical(MusicalDto musicalDto) {
+	public ResponseEntity<Musical> updateMusical( Musical musical ) {
         try {
-            HttpEntity<MusicalDto> request = new HttpEntity<>(musicalDto);
+	        HttpEntity<Musical> request = new HttpEntity<>( musical );
 
             return restTemplate.exchange(
-                    buildMusicalBaseUrl(),
-                    HttpMethod.PUT,
-                    request,
-                    MusicalDto.class);
+		            buildMusicalBaseUrl(),
+		            HttpMethod.PUT,
+		            request,
+		            Musical.class );
         } catch (RestClientException e) {
             e.printStackTrace();
         }
@@ -85,13 +85,13 @@ public class MusicalClient {
         return null;
     }
 
-    public ResponseEntity deleteMusical(Long id) {
+	public ResponseEntity deleteMusical( MusicalId musicalId ) {
         try {
             return restTemplate.exchange(
-                    String.format(buildMusicalBaseUrl().concat("/%s"), id),
-                    HttpMethod.DELETE,
-                    null,
-                    ResponseEntity.class);
+		            String.format( buildMusicalBaseUrl().concat( "/%s" ), musicalId.getId() ),
+		            HttpMethod.DELETE,
+		            null,
+		            ResponseEntity.class);
         } catch (RestClientException e) {
             e.printStackTrace();
         }
@@ -100,6 +100,6 @@ public class MusicalClient {
     }
 
     private String buildMusicalBaseUrl() {
-        return musicalServiceUrl.concat("/api/musical");
+	    return musicalServiceUrl.concat( "/api/musicals" );
     }
 }

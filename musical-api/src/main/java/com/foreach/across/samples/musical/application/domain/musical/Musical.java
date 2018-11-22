@@ -36,8 +36,7 @@ public class Musical extends SettableIdBasedEntity<Musical> {
     @Column(name = "name")
     private String name;
 
-    @NotBlank
-    @Length(max = 200)
+    @Length(max = 2000)
     @Column(name = "description")
     private String description;
 

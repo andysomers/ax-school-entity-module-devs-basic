@@ -23,6 +23,21 @@ public class ShowApiController
 		return ResponseEntity.ok( ShowDto.from( show ) );
 	}
 
+	@GetMapping("/shows")
+	public ResponseEntity<List<ShowDto>> getAllShows() {
+		List<ShowDto> response = showRepository.findAll()
+		                                       .stream()
+		                                       .map( ShowDto::from )
+		                                       .collect( Collectors.toList() );
+		return ResponseEntity.ok( response );
+	}
+
+	@DeleteMapping("/shows/{show}")
+	public ResponseEntity deleteShow( @PathVariable("show") Long showId ) {
+		showRepository.delete( showId );
+		return ResponseEntity.ok().build();
+	}
+
 	@GetMapping("/musicals/{musical}/shows/{showId}")
 	public ResponseEntity<ShowDto> getShowByMusical( @PathVariable("musical") Musical musical, @PathVariable("showId") Long showId ) {
 		Show show = showRepository.findOneByIdAndMusical( showId, musical );
@@ -33,7 +48,7 @@ public class ShowApiController
 	}
 
 	@GetMapping("/musicals/{musical}/shows")
-	public ResponseEntity<List<ShowDto>> getShowsByMusical( @PathVariable("musical") Musical musical ) {
+	public ResponseEntity<List<ShowDto>> getAllShowsByMusical( @PathVariable("musical") Musical musical ) {
 		if ( musical == null ) {
 			return ResponseEntity.notFound().build();
 		}
@@ -45,30 +60,22 @@ public class ShowApiController
 	}
 
 	@PostMapping("/musicals/{musical}/shows")
-	public ResponseEntity<ShowDto> createShow( @PathVariable("musical") Musical musical, ShowDto showDto ) {
+	public ResponseEntity<ShowDto> createShow( @PathVariable("musical") Musical musical, @RequestBody ShowDto showDto ) {
 		Show show = showDto.toShow();
 		show.setMusical( musical );
-		return ResponseEntity.ok( ShowDto.from( show ) );
-	}
-
-	@PutMapping("/musicals/{musical}/shows/{show}")
-	public ResponseEntity<ShowDto> updateShow( @PathVariable("musical") Musical musical, @PathVariable("show") ShowDto showDto ) {
-		Show show = showRepository.findOneByIdAndMusical( showDto.getId(), musical );
-		if ( show == null ) {
-			return ResponseEntity.notFound().build();
-		}
-		show.setName( showDto.getName() );
 		showRepository.save( show );
 		return ResponseEntity.ok( ShowDto.from( show ) );
 	}
 
-	@DeleteMapping("/musicals/{musical}/shows/{show}")
-	public ResponseEntity deleteShow( @PathVariable("musical") Musical musical, @PathVariable("show") Long showId ) {
+	@PutMapping("/musicals/{musical}/shows/{show}")
+	public ResponseEntity<ShowDto> updateShow( @PathVariable("musical") Musical musical, @PathVariable("show") Long showId, @RequestBody ShowDto showDto ) {
 		Show show = showRepository.findOneByIdAndMusical( showId, musical );
 		if ( show == null ) {
 			return ResponseEntity.notFound().build();
 		}
-		showRepository.delete( show );
-		return ResponseEntity.ok().build();
+		show.setLocation( showDto.getLocation() );
+		show.setTime( showDto.getTime() );
+		showRepository.save( show );
+		return ResponseEntity.ok( ShowDto.from( show ) );
 	}
 }
