@@ -12,7 +12,6 @@
 	<artifactId>booking-app</artifactId>
 
 	<dependencies>
-
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -29,6 +28,11 @@
 		<dependency>
 			<groupId>com.foreach.across.modules</groupId>
 			<artifactId>across-hibernate-module</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-java8</artifactId>
+			<version>5.1.0.Final</version>
 		</dependency>
 	</dependencies>
 </project>
