@@ -35,8 +35,8 @@ public class MusicalDataInstaller
 		musicalRepository.save( zombieKids );
 
 		List<Show> zombieKidShows = new ArrayList<Show>();
-		zombieKidShows.add( Show.builder().name( "Show 1" ).location( "Brussel" ).time( ZonedDateTime.now().plusDays( 5 ) ).build() );
-		zombieKidShows.add( Show.builder().name( "Show 2" ).location( "Antwerpen" ).time( ZonedDateTime.now().plusDays( 5 ) ).build() );
+		zombieKidShows.add( Show.builder().location( "Brussel" ).time( ZonedDateTime.now().plusDays( 5 ) ).build() );
+		zombieKidShows.add( Show.builder().location( "Antwerpen" ).time( ZonedDateTime.now().plusDays( 5 ) ).build() );
 		zombieKidShows.stream()
 		              .forEach( show -> show.setMusical( zombieKids ) );
 		showRepository.save( zombieKidShows );

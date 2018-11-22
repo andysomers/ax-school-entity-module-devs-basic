@@ -1,5 +1,6 @@
 package com.foreach.across.samples.musical.application.domain.show;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.foreach.across.modules.hibernate.business.SettableIdBasedEntity;
 import com.foreach.across.modules.hibernate.id.AcrossSequenceGenerator;
 import com.foreach.across.samples.musical.application.domain.musical.Musical;
@@ -32,11 +33,6 @@ public class Show extends SettableIdBasedEntity<Show>
 			}
 	)
 	private Long id;
-
-	@NotBlank
-	@Length(max = 200)
-	@Column(name = "name")
-	private String name;
 
 	@NotBlank
 	@Length(max = 10000)
