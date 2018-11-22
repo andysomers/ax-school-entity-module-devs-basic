@@ -1,5 +1,6 @@
 package com.foreach.across.samples.booking.application.domain.show;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.foreach.across.samples.booking.application.domain.musical.MusicalId;
 import lombok.*;
 
@@ -15,6 +16,7 @@ public class Show
 	private ShowId id;
 	private String location;
 	private String city;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
 	private ZonedDateTime time;
 	private MusicalId musicalId;
 

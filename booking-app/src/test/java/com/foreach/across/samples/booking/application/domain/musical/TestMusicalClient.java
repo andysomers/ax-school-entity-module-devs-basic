@@ -90,7 +90,6 @@ public class TestMusicalClient
 
 	@Test
 	public void deleteMusical() throws JsonProcessingException {
-		List<Musical> allMusicals = musicalClient.getAllMusicals();
 		musicalClient.deleteMusical( existingMusical.getId() );
 	}
 }
