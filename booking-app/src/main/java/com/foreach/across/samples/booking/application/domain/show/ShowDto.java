@@ -1,5 +1,6 @@
 package com.foreach.across.samples.booking.application.domain.show;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import java.time.ZonedDateTime;
@@ -12,25 +13,28 @@ import java.time.ZonedDateTime;
 @Builder(toBuilder = true)
 public class ShowDto {
     private Long id;
-    private String name;
+
     private String location;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
     private ZonedDateTime time;
 
-    public static ShowDto from(Show show) {
+    private Long musicalId;
+
+    public static ShowDto from( Show show ) {
         return ShowDto.builder()
-                .id(show.getId())
-                .name(show.getName())
-                .location(show.getLocation())
-                .time(show.getTime())
-                .build();
+                      .id( show.getId() )
+                      .location( show.getLocation() )
+                      .time( show.getTime() )
+                      .musicalId( show.getMusical().getId() )
+                      .build();
     }
 
     public Show toShow() {
         return Show.builder()
-                .id(this.getId())
-                .name(this.getName())
-                .location(this.getLocation())
-                .time(this.getTime())
-                .build();
+                   .id( this.getId() )
+                   .location( this.getLocation() )
+                   .time( this.getTime() )
+                   .build();
     }
 }
