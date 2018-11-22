@@ -11,32 +11,34 @@ import lombok.RequiredArgsConstructor;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Installer(
-        name = "Default musical data installer",
-        description = "Installs some default musicals and shows",
-        version = 1,
-        phase = InstallerPhase.AfterModuleBootstrap
+		name = "Default musical data installer",
+		description = "Installs some default musicals and shows",
+		version = 1,
+		phase = InstallerPhase.AfterModuleBootstrap
 )
 @RequiredArgsConstructor
-public class MusicalDataInstaller {
-    private final MusicalRepository musicalRepository;
+public class MusicalDataInstaller
+{
+	private final MusicalRepository musicalRepository;
+	private final ShowRepository showRepository;
 
-    @InstallerMethod
-    public void install(){
-        List<Show> zombieKidShows = new ArrayList<Show>();
+	@InstallerMethod
+	public void install() {
 
-        zombieKidShows.add(Show.builder().name("Show 1").location("Brussel").time(ZonedDateTime.now().plusDays(5)).build());
-        zombieKidShows.add(Show.builder().name("Show 2").location("Antwerpen").time(ZonedDateTime.now().plusDays(5)).build());
+		Musical zombieKids = Musical.builder()
+		                            .name( "Smurfen de Musical" )
+		                            .description( "Musical about 'the smurfen' with several shows in all major cities!" )
+		                            .build();
+		musicalRepository.save( zombieKids );
 
-        Musical zombieKids = Musical.builder()
-                .name("Smurfen de Musical")
-                .description("Musical about 'the smurfen' with several shows in all major cities!")
-                .shows(zombieKidShows)
-                .build();
-
-        musicalRepository.save(zombieKids);
-    }
+		List<Show> zombieKidShows = new ArrayList<Show>();
+		zombieKidShows.add( Show.builder().name( "Show 1" ).location( "Brussel" ).time( ZonedDateTime.now().plusDays( 5 ) ).build() );
+		zombieKidShows.add( Show.builder().name( "Show 2" ).location( "Antwerpen" ).time( ZonedDateTime.now().plusDays( 5 ) ).build() );
+		zombieKidShows.stream()
+		              .forEach( show -> show.setMusical( zombieKids ) );
+		showRepository.save( zombieKidShows );
+	}
 }
