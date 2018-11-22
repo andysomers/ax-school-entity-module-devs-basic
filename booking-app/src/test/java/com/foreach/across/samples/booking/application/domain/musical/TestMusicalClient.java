@@ -1,10 +1,7 @@
-package com.foreach.across.samples.booking.application.domain.show;
+package com.foreach.across.samples.booking.application.domain.musical;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.foreach.across.samples.booking.application.domain.musical.Musical;
-import com.foreach.across.samples.booking.application.domain.musical.MusicalClient;
-import com.foreach.across.samples.booking.application.domain.musical.MusicalId;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;

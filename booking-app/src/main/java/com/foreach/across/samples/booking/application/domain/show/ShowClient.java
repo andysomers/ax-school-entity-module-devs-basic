@@ -1,7 +1,7 @@
 package com.foreach.across.samples.booking.application.domain.show;
 
 import com.foreach.across.samples.booking.application.domain.musical.MusicalId;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -14,13 +14,16 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 @Component
-@RequiredArgsConstructor
 public class ShowClient
 {
 	private final RestTemplate restTemplate;
+	private final String musicalServiceUrl;
 
-	@Value("${musicalService.url}")
-	private String musicalServiceUrl;
+	@Autowired
+	public ShowClient( RestTemplate restTemplate, @Value("${musicalService.url}") String musicalServiceUrl ) {
+		this.restTemplate = restTemplate;
+		this.musicalServiceUrl = musicalServiceUrl;
+	}
 
 	public ResponseEntity<List<Show>> getAllShows() {
 		try {
