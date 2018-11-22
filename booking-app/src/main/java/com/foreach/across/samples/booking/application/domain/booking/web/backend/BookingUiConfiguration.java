@@ -4,6 +4,7 @@ import com.foreach.across.modules.adminweb.menu.AdminMenuEvent;
 import com.foreach.across.modules.entity.EntityAttributes;
 import com.foreach.across.modules.entity.config.EntityConfigurer;
 import com.foreach.across.modules.entity.config.builders.EntitiesConfigurationBuilder;
+import com.foreach.across.modules.entity.query.EntityQueryConditionTranslator;
 import com.foreach.across.samples.booking.application.domain.booking.Booking;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
@@ -19,11 +20,24 @@ class BookingUiConfiguration implements EntityConfigurer
 				        props -> props.property( "created" )
 				                      .writable( false )
 				                      .attribute( EntityAttributes.PROPERTY_REQUIRED, true )
+				                      .and()
+				                      .property( "email" )
+				                      .attribute( EntityQueryConditionTranslator.class, EntityQueryConditionTranslator.ignoreCase() )
+				                      .and()
+				                      .property( "name" )
+				                      .attribute( EntityQueryConditionTranslator.class, EntityQueryConditionTranslator.ignoreCase() )
+				                      .and()
+				                      .property( "searchText" )
+				                      .propertyType( String.class )
+				                      .hidden( true )
+				                      .attribute( EntityQueryConditionTranslator.class, EntityQueryConditionTranslator.expandingOr( "email", "name" ) )
+
 		        )
 		        .attribute( EntityAttributes.LINK_TO_DETAIL_VIEW, true )
 		        .listView(
 				        lvb -> lvb.showProperties( ".", "~ticketType" )
 				                  .defaultSort( new Sort( Sort.Direction.DESC, "created" ) )
+				                  .entityQueryFilter( filter -> filter.showProperties( "ticketType", "searchText" ) )
 		        )
 		        .createFormView(
 				        fvb -> fvb.properties( props -> props.property( "created" ).writable( true ) )
