@@ -13,7 +13,7 @@ public class Musical
 	private String name;
 	private String description;
 
-	public void setId( Long id ) {
+	public void setId( String id ) {
 		this.id = MusicalId.of( id );
 	}
 }
