@@ -9,6 +9,7 @@ import com.foreach.across.samples.musical.application.domain.show.Show;
 import com.foreach.across.samples.musical.application.domain.show.ShowRepository;
 import lombok.RequiredArgsConstructor;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -27,11 +28,12 @@ public class MusicalDataInstaller {
     public void install(){
         List<Show> zombieKidShows = new ArrayList<Show>();
 
-        zombieKidShows.add(Show.builder().name("Brussel").build());
-        zombieKidShows.add(Show.builder().name("Antwerpen").build());
+        zombieKidShows.add(Show.builder().name("Show 1").location("Brussel").time(ZonedDateTime.now().plusDays(5)).build());
+        zombieKidShows.add(Show.builder().name("Show 2").location("Antwerpen").time(ZonedDateTime.now().plusDays(5)).build());
 
         Musical zombieKids = Musical.builder()
                 .name("Smurfen de Musical")
+                .description("Musical about 'the smurfen' with several shows in all major cities!")
                 .shows(zombieKidShows)
                 .build();
 

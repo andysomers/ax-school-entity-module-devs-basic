@@ -8,6 +8,8 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.time.ZonedDateTime;
 
 @Entity
 @Table(name = "sample_show")
@@ -33,4 +35,13 @@ public class Show extends SettableIdBasedEntity<Show> {
     @Length(max = 200)
     @Column(name = "name")
     private String name;
+
+    @NotBlank
+    @Length(max = 10000)
+    @Column(name = "location")
+    private String location;
+
+    @NotNull
+    @Column(name = "time")
+    private ZonedDateTime time;
 }

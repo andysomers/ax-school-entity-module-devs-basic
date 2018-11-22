@@ -1,9 +1,8 @@
-package com.foreach.across.samples.musical.application.domain.show;
+package com.foreach.across.samples.booking.application.domain.show;
 
 import lombok.*;
 
 import java.time.ZonedDateTime;
-import java.util.List;
 
 
 @Getter

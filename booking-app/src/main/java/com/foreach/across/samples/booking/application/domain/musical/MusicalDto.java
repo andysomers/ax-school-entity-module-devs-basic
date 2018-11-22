@@ -1,10 +1,6 @@
-package com.foreach.across.samples.musical.application.domain.musical;
+package com.foreach.across.samples.booking.application.domain.musical;
 
-import com.foreach.across.samples.musical.application.domain.show.ShowDto;
 import lombok.*;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Getter
