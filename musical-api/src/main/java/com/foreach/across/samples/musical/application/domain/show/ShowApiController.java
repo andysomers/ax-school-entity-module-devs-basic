@@ -32,6 +32,12 @@ public class ShowApiController
 		return ResponseEntity.ok( response );
 	}
 
+	@DeleteMapping("/shows/{show}")
+	public ResponseEntity deleteShow( @PathVariable("show") Long showId ) {
+		showRepository.delete( showId );
+		return ResponseEntity.ok().build();
+	}
+
 	@GetMapping("/musicals/{musical}/shows/{showId}")
 	public ResponseEntity<ShowDto> getShowByMusical( @PathVariable("musical") Musical musical, @PathVariable("showId") Long showId ) {
 		Show show = showRepository.findOneByIdAndMusical( showId, musical );
@@ -71,15 +77,5 @@ public class ShowApiController
 		show.setTime( showDto.getTime() );
 		showRepository.save( show );
 		return ResponseEntity.ok( ShowDto.from( show ) );
-	}
-
-	@DeleteMapping("/musicals/{musical}/shows/{show}")
-	public ResponseEntity deleteShow( @PathVariable("musical") Musical musical, @PathVariable("show") Long showId ) {
-		Show show = showRepository.findOneByIdAndMusical( showId, musical );
-		if ( show == null ) {
-			return ResponseEntity.notFound().build();
-		}
-		showRepository.delete( show );
-		return ResponseEntity.ok().build();
 	}
 }
