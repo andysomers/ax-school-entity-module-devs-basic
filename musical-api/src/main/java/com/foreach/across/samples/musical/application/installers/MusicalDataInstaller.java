@@ -27,7 +27,6 @@ public class MusicalDataInstaller
 
 	@InstallerMethod
 	public void install() {
-
 		Musical zombieKids = Musical.builder()
 		                            .name( "Smurfen de Musical" )
 		                            .description( "Musical about 'the smurfen' with several shows in all major cities!" )
@@ -35,8 +34,8 @@ public class MusicalDataInstaller
 		musicalRepository.save( zombieKids );
 
 		List<Show> zombieKidShows = new ArrayList<Show>();
-		zombieKidShows.add( Show.builder().location( "Brussel" ).time( ZonedDateTime.now().plusDays( 5 ) ).build() );
-		zombieKidShows.add( Show.builder().location( "Antwerpen" ).time( ZonedDateTime.now().plusDays( 5 ) ).build() );
+		zombieKidShows.add( Show.builder().location( "Carré" ).city( "Brussel" ).time( ZonedDateTime.now().plusDays( 5 ) ).build() );
+		zombieKidShows.add( Show.builder().location( "Bourla schouwburg" ).city( "Antwerpen" ).time( ZonedDateTime.now().plusDays( 5 ) ).build() );
 		zombieKidShows.stream()
 		              .forEach( show -> show.setMusical( zombieKids ) );
 		showRepository.save( zombieKidShows );

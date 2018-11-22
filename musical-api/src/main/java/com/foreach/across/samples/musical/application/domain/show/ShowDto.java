@@ -16,6 +16,8 @@ public class ShowDto
 
 	private String location;
 
+	private String city;
+
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
 	private ZonedDateTime time;
 
@@ -25,6 +27,7 @@ public class ShowDto
 		return ShowDto.builder()
 		              .id( show.getId() )
 		              .location( show.getLocation() )
+		              .city( show.getCity() )
 		              .time( show.getTime() )
 		              .musicalId( show.getMusical().getId() )
 		              .build();
@@ -34,6 +37,7 @@ public class ShowDto
 		return Show.builder()
 		           .id( this.getId() )
 		           .location( this.getLocation() )
+		           .city( city )
 		           .time( this.getTime() )
 		           .build();
 	}

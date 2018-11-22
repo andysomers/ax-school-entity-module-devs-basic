@@ -13,6 +13,7 @@ import java.time.ZonedDateTime;
 public class Show {
     private Long id;
     private String location;
+	private String city;
     private ZonedDateTime time;
 	private Musical musical;
 }
