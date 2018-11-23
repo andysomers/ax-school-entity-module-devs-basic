@@ -18,6 +18,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.repository.core.support.ReflectionEntityInformation;
 import org.springframework.format.support.FormattingConversionService;
 
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+
 @Configuration
 @RequiredArgsConstructor
 class ShowUiConfiguration implements EntityConfigurer
@@ -43,7 +46,7 @@ class ShowUiConfiguration implements EntityConfigurer
 				                      .writable( true )
 		        )
 		        .entityModel(
-				        model -> model.labelPrinter( ( show, locale ) -> show.getMusicalId().toString() )
+				        model -> model.labelPrinter( this::createLabelForShow )
 				                      .entityInformation( new ReflectionEntityInformation<>( Show.class ) )
 				                      .findOneMethod( s -> showClient.getShow( ShowId.of( s.toString() ) ) )
 				                      .entityFactory( new SimpleEntityFactory<>( Show::new, show -> show.toBuilder().build() ) )
@@ -68,6 +71,11 @@ class ShowUiConfiguration implements EntityConfigurer
 			        messageCodeResolver.setFallbackCollections( "booking", "EntityModule.entities" );
 		        } );
 
+	}
+
+	private String createLabelForShow( Show show, Locale locale ) {
+		Musical musical = musicalClient.getMusical( show.getMusicalId() );
+		return musical.getName() + " - " + show.getTime().format( DateTimeFormatter.ofPattern( "dd MMM yyyy HH:mm" ) ) + " - " + show.getCity();
 	}
 
 	private void configureMusicalPropertyController( ConfigurableEntityPropertyController<Object, Object> controller ) {

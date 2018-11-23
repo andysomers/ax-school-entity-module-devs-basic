@@ -1,6 +1,7 @@
 package com.foreach.across.samples.booking.application.domain.booking;
 
 import com.foreach.across.modules.hibernate.business.EntityWithDto;
+import com.foreach.across.samples.booking.application.domain.show.ShowId;
 import lombok.*;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
@@ -30,6 +31,9 @@ public class Booking implements Persistable<Long>, EntityWithDto<Booking>
 	@Id
 	@GeneratedValue
 	private Long id;
+
+	@NotNull
+	private ShowId showId;
 
 	@NotBlank
 	@Length(max = 255)
