@@ -46,7 +46,7 @@ public class MusicalApiController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, path = "/{id}")
-    public ResponseEntity<MusicalDto> updateMusical(@PathVariable Musical existingMusical, @RequestBody MusicalDto musicalDto) {
+    public ResponseEntity<MusicalDto> updateMusical( @PathVariable("id") Musical existingMusical, @RequestBody MusicalDto musicalDto ) {
         existingMusical.setName(musicalDto.getName());
         existingMusical.setDescription(musicalDto.getDescription());
 
