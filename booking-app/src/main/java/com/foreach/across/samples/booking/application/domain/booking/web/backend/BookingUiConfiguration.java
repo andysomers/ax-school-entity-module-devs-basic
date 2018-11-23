@@ -33,6 +33,7 @@ class BookingUiConfiguration implements EntityConfigurer
 	private final ShowClient showClient;
 	private final InvoiceRepository invoiceRepository;
 	private final Validator entityValidator;
+	private final InvoiceViewProcessor invoiceViewProcessor;
 
 	@Override
 	public void configure( EntitiesConfigurationBuilder entities ) {
@@ -57,6 +58,8 @@ class BookingUiConfiguration implements EntityConfigurer
 				                      .hidden( true )
 				                      .attribute( EntityPropertyHandlingType.class, EntityPropertyHandlingType.BINDER )
 				                      .controller( this::invoiceController )
+				                      .and()
+				                      .property( "followupList" ).hidden( true )
 
 		        )
 		        .properties( this::configureShowProperties )
@@ -76,7 +79,8 @@ class BookingUiConfiguration implements EntityConfigurer
 				        "invoice",
 				        EntityViewCustomizers.basicSettings()
 				                             .adminMenu( "/invoice" )
-				                             .andThen( fvb -> fvb.showProperties( "invoice.*" ) )
+				                             .andThen( fvb -> fvb.showProperties( "invoice.*", "followupList" ) )
+				                             .andThen( fvb -> fvb.viewProcessor( invoiceViewProcessor ) )
 		        )
 		        .view(
 				        EntityView.SUMMARY_VIEW_NAME, vb -> vb.showProperties( "invoice.amount", "invoice.invoiceStatus", "invoice.invoiceDate" )

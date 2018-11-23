@@ -14,6 +14,8 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A single show booking.
@@ -55,6 +57,9 @@ public class Booking implements Persistable<Long>, EntityWithDto<Booking>
 
 	@ManyToOne
 	private Invoice invoice;
+
+	@ElementCollection
+	private List<BookingFollowup> followupList = new ArrayList<>();
 
 	@Override
 	public Booking toDto() {
