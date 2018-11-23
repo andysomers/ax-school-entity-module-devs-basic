@@ -25,6 +25,11 @@ public class InvoiceModule extends AcrossModule {
     }
 
     @Override
+    public String getDescription() {
+        return "WebCmsModule exposes a Invoice entity.";
+    }
+
+    @Override
     protected void registerDefaultApplicationContextConfigurers(Set<ApplicationContextConfigurer> contextConfigurers) {
         contextConfigurers.add(ComponentScanConfigurer.forAcrossModule(InvoiceModule.class));
     }
