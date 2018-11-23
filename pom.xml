@@ -5,8 +5,8 @@
 
 	<groupId>com.foreach.across.samples</groupId>
 	<artifactId>ax-school-entity-module-devs-basic</artifactId>
+    <packaging>pom</packaging>
 	<version>1.0.0-SNAPSHOT</version>
-	<packaging>pom</packaging>
 
 	<name>Booking</name>
 	<description>Booking</description>
@@ -28,13 +28,13 @@
 		<maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
 	</properties>
 
-	<modules>
-		<module>musical-api</module>
-		<module>invoice-module</module>
-		<module>booking-app</module>
-	</modules>
+    <modules>
+        <module>musical-api</module>
+        <module>invoice-module</module>
+        <module>booking-app</module>
+    </modules>
 
-	<dependencyManagement>
+    <dependencyManagement>
 		<dependencies>
 			<dependency>
 				<groupId>com.foreach.across</groupId>
@@ -48,6 +48,11 @@
 				<artifactId>lombok</artifactId>
 				<version>${lombok.version}</version>
 				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-java8</artifactId>
+				<version>5.1.0.Final</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
