@@ -4,6 +4,7 @@ import com.foreach.across.core.annotations.ModuleConfiguration;
 import com.foreach.across.modules.hibernate.jpa.AcrossHibernateJpaModule;
 import com.foreach.across.modules.hibernate.provider.HibernatePackageConfigurer;
 import com.foreach.across.modules.hibernate.provider.HibernatePackageRegistry;
+import com.foreach.across.samples.modules.invoice.domain.InvoiceDomain;
 
 /**
  * The AcrossHibernateJpaModule sets up a shared EntityManager that multiple modules can use (with Hibernate).
@@ -17,6 +18,6 @@ import com.foreach.across.modules.hibernate.provider.HibernatePackageRegistry;
 public class EntityScanConfiguration implements HibernatePackageConfigurer {
     @Override
     public void configureHibernatePackage(HibernatePackageRegistry hibernatePackageRegistry) {
-
+        hibernatePackageRegistry.addPackageToScan(InvoiceDomain.class);
     }
 }
