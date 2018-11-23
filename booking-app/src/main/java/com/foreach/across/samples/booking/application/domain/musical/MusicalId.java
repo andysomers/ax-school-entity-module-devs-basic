@@ -1,17 +1,15 @@
 package com.foreach.across.samples.booking.application.domain.musical;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import lombok.*;
 
 import java.io.Serializable;
 
 @Data
-@AllArgsConstructor
+@JsonDeserialize(using = MusicalIdDeserializer.class)
 public class MusicalId implements Serializable
 {
 	private static final long serialVersionUID = 1L;
-
-	private String id;
 
 	public static MusicalId of( String id ) {
 		return new MusicalId( id );

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -16,12 +15,12 @@ import java.util.List;
 @Component
 public class ShowClient
 {
-	private final RestTemplate restTemplate;
+	private RestTemplate restTemplate;
 	private final String musicalServiceUrl;
 
 	@Autowired
-	public ShowClient( RestTemplate restTemplate, @Value("${musicalService.url}") String musicalServiceUrl ) {
-		this.restTemplate = restTemplate;
+	public ShowClient(@Value("${musicalService.url}") String musicalServiceUrl) {
+		this.restTemplate = new RestTemplate();
 		this.musicalServiceUrl = musicalServiceUrl;
 	}
 
@@ -59,21 +58,19 @@ public class ShowClient
 		return null;
 	}
 
-	public List<Show> deleteShow( ShowId showId ) {
+	public void deleteShow( ShowId showId ) {
 		try {
-			return restTemplate.exchange(
+			restTemplate.exchange(
 					String.format( buildShowBaseUrl().concat( "/%s" ), showId ),
 					HttpMethod.DELETE,
 					null,
 					new ParameterizedTypeReference<List<Show>>()
 					{
-					} ).getBody();
+					} );
 		}
 		catch ( RestClientException e ) {
 			e.printStackTrace();
 		}
-
-		return null;
 	}
 
 	public List<Show> getAllShowsForMusical( MusicalId musicalId ) {
@@ -110,15 +107,15 @@ public class ShowClient
 		return null;
 	}
 
-	public List<Show> createShowForMusical( Show show ) {
+	public Show createShowForMusical( MusicalId musicalId, Show show ) {
 		try {
 			HttpEntity<Show> request = new HttpEntity<>( show );
 
 			return restTemplate.exchange(
-					buildMusicalShowsBaseUrl( show.getMusicalId() ).concat( "/shows" ),
+					buildMusicalShowsBaseUrl( musicalId ).concat( "/shows" ),
 					HttpMethod.POST,
 					request,
-					new ParameterizedTypeReference<List<Show>>()
+					new ParameterizedTypeReference<Show>()
 					{
 					} ).getBody();
 		}
@@ -129,12 +126,12 @@ public class ShowClient
 		return null;
 	}
 
-	public List<Show> updateShowForMusical( Show show ) {
+	public List<Show> updateShowForMusical( MusicalId musicalId, Show show ) {
 		try {
 			HttpEntity<Show> request = new HttpEntity<>( show );
 
 			return restTemplate.exchange(
-					buildMusicalShowsBaseUrl( show.getMusicalId() ).concat( "/shows" ),
+					buildMusicalShowsBaseUrl( musicalId ).concat( "/shows" ),
 					HttpMethod.PUT,
 					request,
 					new ParameterizedTypeReference<List<Show>>()

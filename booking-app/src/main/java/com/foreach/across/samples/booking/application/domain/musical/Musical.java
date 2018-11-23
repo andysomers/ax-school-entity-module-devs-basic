@@ -1,5 +1,6 @@
 package com.foreach.across.samples.booking.application.domain.musical;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
@@ -13,6 +14,7 @@ import org.springframework.data.annotation.Id;
 public class Musical
 {
 	@Id
+	@Setter(AccessLevel.PRIVATE)
 	private MusicalId id;
 
 	@NotBlank

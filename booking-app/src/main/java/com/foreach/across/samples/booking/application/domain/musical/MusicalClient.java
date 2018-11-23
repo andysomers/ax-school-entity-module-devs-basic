@@ -14,12 +14,12 @@ import java.util.List;
 @Component
 public class MusicalClient
 {
-	private final RestTemplate restTemplate;
+	private RestTemplate restTemplate;
 	private final String musicalServiceUrl;
 
 	@Autowired
-	public MusicalClient( RestTemplate restTemplate, @Value("${musicalService.url}") String musicalServiceUrl ) {
-		this.restTemplate = restTemplate;
+	public MusicalClient(@Value("${musicalService.url}") String musicalServiceUrl) {
+		this.restTemplate = new RestTemplate();
 		this.musicalServiceUrl = musicalServiceUrl;
 	}
 
@@ -89,19 +89,17 @@ public class MusicalClient
 		return null;
 	}
 
-	public Musical deleteMusical( MusicalId musicalId ) {
+	public void deleteMusical( MusicalId musicalId ) {
 		try {
-			return restTemplate.exchange(
+			restTemplate.exchange(
 					String.format( buildMusicalBaseUrl().concat( "/%s" ), musicalId.getId() ),
 					HttpMethod.DELETE,
 					null,
-					Musical.class ).getBody();
+					Musical.class );
 		}
 		catch ( RestClientException e ) {
 			e.printStackTrace();
 		}
-
-		return null;
 	}
 
 	private String buildMusicalBaseUrl() {
