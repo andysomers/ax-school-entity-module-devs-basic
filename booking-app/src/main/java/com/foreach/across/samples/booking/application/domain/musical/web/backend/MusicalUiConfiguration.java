@@ -3,9 +3,11 @@ package com.foreach.across.samples.booking.application.domain.musical.web.backen
 import com.foreach.across.core.context.info.AcrossModuleInfo;
 import com.foreach.across.modules.entity.config.EntityConfigurer;
 import com.foreach.across.modules.entity.config.builders.EntitiesConfigurationBuilder;
+import com.foreach.across.modules.entity.support.EntityMessageCodeResolver;
 import com.foreach.across.samples.booking.application.domain.musical.Musical;
 import com.foreach.across.samples.booking.application.domain.musical.MusicalClient;
 import com.foreach.across.samples.booking.application.domain.musical.MusicalId;
+import com.foreach.across.samples.booking.application.domain.musical.MusicalValidator;
 import com.foreach.across.samples.booking.application.support.CollectionSupplierEntityQueryExecutor;
 import com.foreach.across.samples.booking.application.support.SimpleEntityFactory;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +16,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.core.support.ReflectionEntityInformation;
 import org.springframework.format.support.FormattingConversionService;
+import org.springframework.validation.Validator;
 
 @Configuration
 @RequiredArgsConstructor
@@ -21,6 +24,7 @@ class MusicalUiConfiguration implements EntityConfigurer
 {
 	private final AcrossModuleInfo moduleInfo;
 	private final MusicalClient musicalClient;
+	private final MusicalValidator musicalValidator;
 
 	@Override
 	public void configure( EntitiesConfigurationBuilder entities ) {
@@ -29,6 +33,7 @@ class MusicalUiConfiguration implements EntityConfigurer
 		        .as( Musical.class )
 		        .attribute( AcrossModuleInfo.class, moduleInfo )
 		        .attribute( CollectionSupplierEntityQueryExecutor.register( musicalClient::getAllMusicals ) )
+		        .attribute( Validator.class, musicalValidator )
 		        .properties(
 				        props -> props.property( "id" ).hidden( true ).and()
 				                      .property( "name" ).attribute( Sort.Order.class, new Sort.Order( "name" ) )
@@ -53,7 +58,12 @@ class MusicalUiConfiguration implements EntityConfigurer
 		        .listView( lvb -> lvb.showProperties( "name" ).defaultSort( "name" ) )
 		        .createFormView()
 		        .updateFormView( fvb -> fvb.showProperties( "name", "description" ) )
-		        .deleteFormView();
+		        .deleteFormView()
+		        .postProcessor( configuration -> {
+			        EntityMessageCodeResolver messageCodeResolver = configuration.getEntityMessageCodeResolver();
+			        messageCodeResolver.setPrefixes( "booking.musical" );
+			        messageCodeResolver.setFallbackCollections( "booking", "EntityModule.entities" );
+		        } );
 	}
 
 	@Autowired
