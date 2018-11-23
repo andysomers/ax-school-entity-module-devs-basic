@@ -18,7 +18,7 @@ public class Show
 	private ZonedDateTime time;
 	private MusicalId musicalId;
 
-	public void setId( Long id ) {
+	public void setId( String id ) {
 		this.id = ShowId.of( id );
 	}
 }

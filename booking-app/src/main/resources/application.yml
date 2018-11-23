@@ -6,7 +6,7 @@ server:
   error:
     includeStacktrace: ALWAYS
     whitelabel:
-      enabled: false
+      enabled: true
   port: 8080
 
 spring:

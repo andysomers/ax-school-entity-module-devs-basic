@@ -6,15 +6,15 @@ import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
 @Converter(autoApply = true)
-public class ShowIdAttributeConverter implements AttributeConverter<ShowId, Long>
+public class ShowIdAttributeConverter implements AttributeConverter<ShowId, String>
 {
 	@Override
-	public Long convertToDatabaseColumn( ShowId attribute ) {
+	public String convertToDatabaseColumn( ShowId attribute ) {
 		return attribute.getId();
 	}
 
 	@Override
-	public ShowId convertToEntityAttribute( Long dbData ) {
+	public ShowId convertToEntityAttribute( String dbData ) {
 		return ShowId.of( dbData );
 	}
 }
