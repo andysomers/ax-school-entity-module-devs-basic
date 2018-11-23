@@ -11,4 +11,6 @@ import java.util.List;
 public interface SeatRepository extends JpaRepository<Seat, Long>, JpaSpecificationExecutor<Seat>
 {
 	List<Seat> findBySeatNumber( String seatNumber );
+
+	List<Seat> findByBookingOrderBySeatNumberAsc( Booking booking );
 }
