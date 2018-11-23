@@ -74,6 +74,7 @@ public class ShowApiController
 		if ( show == null ) {
 			return ResponseEntity.notFound().build();
 		}
+		show.setCity( showDto.getCity() );
 		show.setLocation( showDto.getLocation() );
 		show.setTime( showDto.getTime() );
 		showRepository.save( show );
