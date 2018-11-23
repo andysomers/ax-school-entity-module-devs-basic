@@ -32,7 +32,7 @@ public class MusicalId implements Serializable
 	}
 
 	public static MusicalId of( String id ) {
-		return new MusicalId( id );
+		return id != null ? new MusicalId( id ) : null;
 	}
 
 	/**
