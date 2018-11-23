@@ -4,11 +4,12 @@ import com.foreach.across.modules.hibernate.business.SettableIdBasedEntity;
 import com.foreach.across.modules.hibernate.id.AcrossSequenceGenerator;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.ZonedDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "sample_invoice")
@@ -35,22 +36,33 @@ public class Invoice extends SettableIdBasedEntity<Invoice> {
     private Double amount;
 
     @NotBlank
-    @Column(name = "first_name")
-    private String firstName;
-
-    @NotBlank
-    @Column(name = "last_name")
-    private String lastName;
+    @Column(name = "name")
+    @Length(max = 255)
+    private String name;
 
     @NotBlank
     @Column(name = "email")
+    @Length(max = 255)
     private String email;
 
-    @NotBlank
     @Column(name = "vat_number")
+    @Length(max = 255)
     private String vatNumber;
 
     @NotNull
-    @Column(name = "date")
-    private ZonedDateTime date;
+    @Column(name = "invoiceDate")
+    private LocalDate invoiceDate;
+
+    @NotNull
+    @Column(name = "invoice_status")
+    private InvoiceStatus invoiceStatus;
+
+    /**
+     * Create a label used by EntityModule
+     *
+     * @return String
+     */
+    public String getLabel() {
+        return "invoice-" + this.getId();
+    }
 }
