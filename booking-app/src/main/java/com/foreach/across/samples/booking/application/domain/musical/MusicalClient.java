@@ -33,10 +33,8 @@ public class MusicalClient {
                     new ParameterizedTypeReference<List<Musical>>() {
                     }).getBody();
         } catch (RestClientException e) {
-            LOG.error("Get all musicals from api failed.");
+            throw new RestClientException("Get all musicals failed.", e);
         }
-
-        return null;
     }
 
     public Musical getMusical(MusicalId musicalId) {
@@ -47,10 +45,8 @@ public class MusicalClient {
                     null,
                     Musical.class).getBody();
         } catch (RestClientException e) {
-            LOG.error(String.format("Get musical detail from api failed for id %s .", musicalId.getId()));
+            throw new RestClientException(String.format("Get musical detail failed for id %s .", musicalId.getId()), e);
         }
-
-        return null;
     }
 
     public Musical createMusical(Musical musical) {
@@ -63,10 +59,8 @@ public class MusicalClient {
                     request,
                     Musical.class).getBody();
         } catch (RestClientException e) {
-            LOG.error("Create a musical api failed.");
+            throw new RestClientException("Create a musical failed.", e);
         }
-
-        return null;
     }
 
     public Musical updateMusical(Musical musical) {
@@ -79,10 +73,8 @@ public class MusicalClient {
                     request,
                     Musical.class).getBody();
         } catch (RestClientException e) {
-            LOG.error(String.format("Update musical api failed for id %s .", musical.getId().getId()));
+            throw new RestClientException(String.format("Update musical failed for id %s .", musical.getId().getId()), e);
         }
-
-        return null;
     }
 
     public void deleteMusical(MusicalId musicalId) {
@@ -93,7 +85,7 @@ public class MusicalClient {
                     null,
                     Musical.class);
         } catch (RestClientException e) {
-            LOG.error(String.format("Delete musical api failed for id %s .", musicalId.getId()));
+            throw new RestClientException(String.format("Delete musical failed for id %s..", musicalId.getId()), e);
         }
     }
 

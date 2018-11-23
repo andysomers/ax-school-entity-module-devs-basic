@@ -5,13 +5,8 @@
 
 	<groupId>com.foreach.across.samples</groupId>
 	<artifactId>ax-school-entity-module-devs-basic</artifactId>
+    <packaging>pom</packaging>
 	<version>1.0.0-SNAPSHOT</version>
-	<modules>
-		<module>musical-api</module>
-		<module>invoice-module</module>
-		<module>booking-app</module>
-	</modules>
-	<packaging>pom</packaging>
 
 	<name>Booking</name>
 	<description>Booking</description>
@@ -33,7 +28,13 @@
 		<maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
 	</properties>
 
-	<dependencyManagement>
+    <modules>
+        <module>musical-api</module>
+        <module>invoice-module</module>
+        <module>booking-app</module>
+    </modules>
+
+    <dependencyManagement>
 		<dependencies>
 			<dependency>
 				<groupId>com.foreach.across</groupId>
