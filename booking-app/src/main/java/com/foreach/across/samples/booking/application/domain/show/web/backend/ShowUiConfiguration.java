@@ -60,7 +60,7 @@ class ShowUiConfiguration implements EntityConfigurer
 				                      )
 				                      .deleteMethod( show -> showClient.deleteShow( show.getId() ) )
 		        )
-		        .show()
+		        .hide()
 		        .listView(/* lvb -> lvb.showProperties( "location" )*/ )
 		        .createFormView()
 		        .updateFormView()
