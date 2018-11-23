@@ -10,6 +10,7 @@ import com.foreach.across.modules.entity.registry.properties.ConfigurableEntityP
 import com.foreach.across.modules.entity.registry.properties.EntityPropertyController;
 import com.foreach.across.modules.entity.registry.properties.EntityPropertyHandlingType;
 import com.foreach.across.modules.entity.registry.properties.EntityPropertyValidator;
+import com.foreach.across.modules.entity.views.EntityView;
 import com.foreach.across.modules.entity.views.EntityViewCustomizers;
 import com.foreach.across.samples.booking.application.domain.booking.Booking;
 import com.foreach.across.samples.booking.application.domain.show.Show;
@@ -23,7 +24,7 @@ import org.springframework.core.Ordered;
 import org.springframework.data.domain.Sort;
 import org.springframework.validation.Validator;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDate;
 
 @Configuration
 @RequiredArgsConstructor
@@ -77,6 +78,9 @@ class BookingUiConfiguration implements EntityConfigurer
 				                             .adminMenu( "/invoice" )
 				                             .andThen( fvb -> fvb.showProperties( "invoice.*" ) )
 		        )
+		        .view(
+				        EntityView.SUMMARY_VIEW_NAME, vb -> vb.showProperties( "invoice.amount", "invoice.invoiceStatus", "invoice.invoiceDate" )
+		        )
 		;
 	}
 
@@ -85,9 +89,9 @@ class BookingUiConfiguration implements EntityConfigurer
 		          .order( EntityPropertyController.BEFORE_ENTITY )
 		          .createValueFunction( booking -> Invoice.builder()
 		                                                  .amount( booking.getNumberOfTickets() * 25D )
-		                                                  .firstName( booking.getName() )
+		                                                  .name( booking.getName() )
 		                                                  .email( booking.getEmail() )
-		                                                  .date( ZonedDateTime.now() )
+		                                                  .invoiceDate( LocalDate.now() )
 		                                                  .build() )
 		          .valueFetcher( booking -> booking.getInvoice() != null ? booking.getInvoice().toDto() : null )
 		          .validator( EntityPropertyValidator.of( entityValidator ) )
