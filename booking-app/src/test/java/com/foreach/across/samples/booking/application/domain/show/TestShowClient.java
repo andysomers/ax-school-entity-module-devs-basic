@@ -126,7 +126,7 @@ public class TestShowClient
 	}
 
 	@Test
-	public void deleteShow() throws JsonProcessingException {
+	public void deleteShow() {
 		showClient.deleteShow( existingShow.getId() );
 		assertThatThrownBy( () -> showClient.getShow( existingShow.getId() ) )
 				.isInstanceOf( RestClientException.class );
