@@ -6,20 +6,32 @@ import com.foreach.across.modules.entity.config.EntityConfigurer;
 import com.foreach.across.modules.entity.config.builders.EntitiesConfigurationBuilder;
 import com.foreach.across.modules.entity.config.builders.EntityPropertyRegistryBuilder;
 import com.foreach.across.modules.entity.query.EntityQueryConditionTranslator;
+import com.foreach.across.modules.entity.registry.properties.ConfigurableEntityPropertyController;
+import com.foreach.across.modules.entity.registry.properties.EntityPropertyController;
+import com.foreach.across.modules.entity.registry.properties.EntityPropertyHandlingType;
+import com.foreach.across.modules.entity.registry.properties.EntityPropertyValidator;
+import com.foreach.across.modules.entity.views.EntityViewCustomizers;
 import com.foreach.across.samples.booking.application.domain.booking.Booking;
 import com.foreach.across.samples.booking.application.domain.show.Show;
 import com.foreach.across.samples.booking.application.domain.show.ShowClient;
+import com.foreach.across.samples.modules.invoice.domain.invoice.Invoice;
+import com.foreach.across.samples.modules.invoice.domain.invoice.InvoiceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.Ordered;
 import org.springframework.data.domain.Sort;
+import org.springframework.validation.Validator;
+
+import java.time.ZonedDateTime;
 
 @Configuration
 @RequiredArgsConstructor
 class BookingUiConfiguration implements EntityConfigurer
 {
 	private final ShowClient showClient;
+	private final InvoiceRepository invoiceRepository;
+	private final Validator entityValidator;
 
 	@Override
 	public void configure( EntitiesConfigurationBuilder entities ) {
@@ -39,6 +51,11 @@ class BookingUiConfiguration implements EntityConfigurer
 				                      .propertyType( String.class )
 				                      .hidden( true )
 				                      .attribute( EntityQueryConditionTranslator.class, EntityQueryConditionTranslator.expandingOr( "email", "name" ) )
+				                      .and()
+				                      .property( "invoice" )
+				                      .hidden( true )
+				                      .attribute( EntityPropertyHandlingType.class, EntityPropertyHandlingType.BINDER )
+				                      .controller( this::invoiceController )
 
 		        )
 		        .properties( this::configureShowProperties )
@@ -54,6 +71,29 @@ class BookingUiConfiguration implements EntityConfigurer
 		        .updateFormView(
 				        fvb -> fvb.showProperties( ".", "created" )
 		        )
+		        .formView(
+				        "invoice",
+				        EntityViewCustomizers.basicSettings()
+				                             .adminMenu( "/invoice" )
+				                             .andThen( fvb -> fvb.showProperties( "invoice.*" ) )
+		        )
+		;
+	}
+
+	private void invoiceController( ConfigurableEntityPropertyController<?, ?> controller ) {
+		controller.withTarget( Booking.class, Invoice.class )
+		          .order( EntityPropertyController.BEFORE_ENTITY )
+		          .createValueFunction( booking -> Invoice.builder()
+		                                                  .amount( booking.getNumberOfTickets() * 25D )
+		                                                  .firstName( booking.getName() )
+		                                                  .email( booking.getEmail() )
+		                                                  .date( ZonedDateTime.now() )
+		                                                  .build() )
+		          .valueFetcher( booking -> booking.getInvoice() != null ? booking.getInvoice().toDto() : null )
+		          .validator( EntityPropertyValidator.of( entityValidator ) )
+		          .saveConsumer( ( booking, invoiceValue ) -> {
+			          booking.setInvoice( invoiceRepository.save( invoiceValue.getNewValue() ) );
+		          } )
 		;
 	}
 
