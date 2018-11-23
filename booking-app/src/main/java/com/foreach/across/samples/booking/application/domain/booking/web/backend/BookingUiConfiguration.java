@@ -33,6 +33,8 @@ class BookingUiConfiguration implements EntityConfigurer
 	private final ShowClient showClient;
 	private final InvoiceRepository invoiceRepository;
 	private final Validator entityValidator;
+
+	private final BookingListViewProcessor bookingListViewProcessor;
 	private final InvoiceViewProcessor invoiceViewProcessor;
 
 	@Override
@@ -68,6 +70,7 @@ class BookingUiConfiguration implements EntityConfigurer
 				        lvb -> lvb.showProperties( ".", "~ticketType" )
 				                  .defaultSort( new Sort( Sort.Direction.DESC, "created" ) )
 				                  .entityQueryFilter( filter -> filter.showProperties( "ticketType", "searchText" ) )
+				                  .viewProcessor( bookingListViewProcessor )
 		        )
 		        .createFormView(
 				        fvb -> fvb.properties( props -> props.property( "created" ).writable( true ) )
