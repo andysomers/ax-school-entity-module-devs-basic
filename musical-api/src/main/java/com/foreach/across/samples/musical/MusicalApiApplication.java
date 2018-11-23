@@ -6,8 +6,6 @@ import com.foreach.across.modules.hibernate.jpa.AcrossHibernateJpaModule;
 import com.foreach.across.modules.web.AcrossWebModule;
 import org.springframework.boot.SpringApplication;
 
-import java.util.Collections;
-
 @AcrossApplication(
         modules = {
                 AcrossWebModule.NAME,
@@ -15,9 +13,9 @@ import java.util.Collections;
                 EntityModule.NAME
         }
 )
-public class MusicalApplication {
+public class MusicalApiApplication {
         public static void main( String[] args ) {
-                SpringApplication springApplication = new SpringApplication( MusicalApplication.class );
+                SpringApplication springApplication = new SpringApplication(MusicalApiApplication.class);
                 springApplication.run( args );
         }
 }
