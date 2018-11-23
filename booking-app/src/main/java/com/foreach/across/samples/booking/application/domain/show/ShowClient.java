@@ -150,6 +150,6 @@ public class ShowClient
 	}
 
 	private String buildMusicalShowsBaseUrl( MusicalId musicalId ) {
-		return String.format( musicalServiceUrl.concat( "/api/musicals/%s" ), musicalId.getId() ).concat( "/shows" );
+		return String.format( musicalServiceUrl.concat( "/api/musicals/%s" ), musicalId.toString() ).concat( "/shows" );
 	}
 }

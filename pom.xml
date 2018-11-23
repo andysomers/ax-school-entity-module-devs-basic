@@ -6,11 +6,6 @@
 	<groupId>com.foreach.across.samples</groupId>
 	<artifactId>ax-school-entity-module-devs-basic</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
-	<modules>
-		<module>musical-api</module>
-		<module>invoice-module</module>
-		<module>booking-app</module>
-	</modules>
 	<packaging>pom</packaging>
 
 	<name>Booking</name>
@@ -32,6 +27,12 @@
 		<build.revision>development</build.revision>
 		<maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
 	</properties>
+
+	<modules>
+		<module>musical-api</module>
+		<module>invoice-module</module>
+		<module>booking-app</module>
+	</modules>
 
 	<dependencyManagement>
 		<dependencies>
@@ -143,52 +144,52 @@
 					</dependency>
 				</dependencies>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.6</version>
-				<configuration>
-					<archive>
-						<manifest>
-							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-							<addClasspath>true</addClasspath>
-							<mainClass>com.foreach.across.samples.entity.BookingApplication</mainClass>
-						</manifest>
-						<manifestEntries>
-							<Build-Time>${maven.build.timestamp}</Build-Time>
-						</manifestEntries>
-					</archive>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<goals>
-							<goal>repackage</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<executable>true</executable>
-					<excludeDevtools>true</excludeDevtools>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-				<version>1.4.0</version>
-				<configuration>
-					<mainClass>com.foreach.across.samples.entity.BookingApplication</mainClass>
-					<systemProperties>
-						<systemProperty>
-							<key>spring.profiles.active</key>
-							<value>dev</value>
-						</systemProperty>
-					</systemProperties>
-				</configuration>
-			</plugin>
+			<!--<plugin>-->
+			<!--<groupId>org.apache.maven.plugins</groupId>-->
+			<!--<artifactId>maven-jar-plugin</artifactId>-->
+			<!--<version>2.6</version>-->
+			<!--<configuration>-->
+			<!--<archive>-->
+			<!--<manifest>-->
+			<!--<addDefaultImplementationEntries>true</addDefaultImplementationEntries>-->
+			<!--<addClasspath>true</addClasspath>-->
+			<!--<mainClass>com.foreach.across.samples.entity.BookingApplication</mainClass>-->
+			<!--</manifest>-->
+			<!--<manifestEntries>-->
+			<!--<Build-Time>${maven.build.timestamp}</Build-Time>-->
+			<!--</manifestEntries>-->
+			<!--</archive>-->
+			<!--</configuration>-->
+			<!--</plugin>-->
+			<!--<plugin>-->
+			<!--<groupId>org.springframework.boot</groupId>-->
+			<!--<artifactId>spring-boot-maven-plugin</artifactId>-->
+			<!--<executions>-->
+			<!--<execution>-->
+			<!--<goals>-->
+			<!--<goal>repackage</goal>-->
+			<!--</goals>-->
+			<!--</execution>-->
+			<!--</executions>-->
+			<!--<configuration>-->
+			<!--<executable>true</executable>-->
+			<!--<excludeDevtools>true</excludeDevtools>-->
+			<!--</configuration>-->
+			<!--</plugin>-->
+			<!--<plugin>-->
+			<!--<groupId>org.codehaus.mojo</groupId>-->
+			<!--<artifactId>exec-maven-plugin</artifactId>-->
+			<!--<version>1.4.0</version>-->
+			<!--<configuration>-->
+			<!--<mainClass>com.foreach.across.samples.entity.BookingApplication</mainClass>-->
+			<!--<systemProperties>-->
+			<!--<systemProperty>-->
+			<!--<key>spring.profiles.active</key>-->
+			<!--<value>dev</value>-->
+			<!--</systemProperty>-->
+			<!--</systemProperties>-->
+			<!--</configuration>-->
+			<!--</plugin>-->
 		</plugins>
 		<pluginManagement>
 			<plugins>
@@ -199,22 +200,22 @@
 				</plugin>
 			</plugins>
 		</pluginManagement>
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-				<filtering>false</filtering>
-				<excludes>
-					<exclude>build.properties</exclude>
-				</excludes>
-			</resource>
-			<resource>
-				<directory>src/main/resources</directory>
-				<includes>
-					<include>build.properties</include>
-				</includes>
-				<targetPath>.</targetPath>
-				<filtering>true</filtering>
-			</resource>
-		</resources>
+		<!--<resources>-->
+		<!--<resource>-->
+		<!--<directory>src/main/resources</directory>-->
+		<!--<filtering>false</filtering>-->
+		<!--<excludes>-->
+		<!--<exclude>build.properties</exclude>-->
+		<!--</excludes>-->
+		<!--</resource>-->
+		<!--<resource>-->
+		<!--<directory>src/main/resources</directory>-->
+		<!--<includes>-->
+		<!--<include>build.properties</include>-->
+		<!--</includes>-->
+		<!--<targetPath>.</targetPath>-->
+		<!--<filtering>true</filtering>-->
+		<!--</resource>-->
+		<!--</resources>-->
 	</build>
 </project>
