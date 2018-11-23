@@ -15,6 +15,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -53,10 +56,53 @@ public class TestShowClient {
     }
 
     @Test
-    public void getAllMusicals() throws JsonProcessingException {
+    public void getAllShows() throws JsonProcessingException {
         List<Show> shows = showClient.getAllShows();
-
         LOG.debug(mapper.writeValueAsString(shows));
+    }
+
+    @Test
+    public void getASingleShow() throws JsonProcessingException {
+        Show show = showClient.getShow( existingShow.getId() );
+        LOG.debug( mapper.writeValueAsString( show ) );
+    }
+
+    @Test
+    public void getAllShowsForMusical() throws JsonProcessingException {
+        List<Show> shows = showClient.getAllShowsForMusical( existingMusical.getId() );
+        LOG.debug( mapper.writeValueAsString( shows ) );
+    }
+
+    @Test
+    public void getSingleShowForMusical() throws JsonProcessingException {
+        Show show = showClient.getShowForMusical( existingMusical.getId(), existingShow.getId() );
+        LOG.debug( mapper.writeValueAsString( show ) );
+    }
+
+    @Test
+    public void createShowForMusical() throws JsonProcessingException {
+        Show show = Show.builder()
+                        .musicalId( existingMusical.getId() )
+                        .city( "Brussel" )
+                        .location( "Carré" )
+                        .time( ZonedDateTime.of( LocalDate.of( 2018, 9, 12 ), LocalTime.of( 12, 0 ), ZoneId.of( "UTC" ) ) )
+                        .build();
+        Show created = showClient.createShowForMusical( existingMusical.getId(), show );
+        LOG.debug( mapper.writeValueAsString( created ) );
+    }
+
+    @Test
+    public void updateShowForMusical() throws JsonProcessingException {
+        Show show = existingShow;
+        show.setCity( "Brussel" );
+        show.setLocation( "Carré" );
+        Show updated = showClient.updateShowForMusical( existingMusical.getId(), show );
+        LOG.debug( mapper.writeValueAsString( updated ) );
+    }
+
+    @Test
+    public void deleteShow() throws JsonProcessingException {
+        showClient.deleteShow( existingShow.getId() );
     }
 
     @After

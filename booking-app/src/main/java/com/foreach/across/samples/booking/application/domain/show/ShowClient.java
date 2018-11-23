@@ -41,13 +41,13 @@ public class ShowClient
 		return null;
 	}
 
-	public List<Show> getShow( ShowId showId ) {
+	public Show getShow( ShowId showId ) {
 		try {
 			return restTemplate.exchange(
 					String.format( buildShowBaseUrl().concat( "/%s" ), showId.getId() ),
 					HttpMethod.GET,
 					null,
-					new ParameterizedTypeReference<List<Show>>()
+					new ParameterizedTypeReference<Show>()
 					{
 					} ).getBody();
 		}
@@ -61,7 +61,7 @@ public class ShowClient
 	public void deleteShow( ShowId showId ) {
 		try {
 			restTemplate.exchange(
-					String.format( buildShowBaseUrl().concat( "/%s" ), showId ),
+					String.format( buildShowBaseUrl().concat( "/%s" ), showId.getId() ),
 					HttpMethod.DELETE,
 					null,
 					new ParameterizedTypeReference<List<Show>>()
@@ -90,13 +90,13 @@ public class ShowClient
 		return null;
 	}
 
-	public List<Show> getShowForMusical( MusicalId musicalId, ShowId showId ) {
+	public Show getShowForMusical( MusicalId musicalId, ShowId showId ) {
 		try {
 			return restTemplate.exchange(
-					String.format( buildMusicalShowsBaseUrl( musicalId ).concat( "/%s" ), showId ),
+					String.format( buildMusicalShowsBaseUrl( musicalId ).concat( "/%s" ), showId.getId() ),
 					HttpMethod.GET,
 					null,
-					new ParameterizedTypeReference<List<Show>>()
+					new ParameterizedTypeReference<Show>()
 					{
 					} ).getBody();
 		}
@@ -112,7 +112,7 @@ public class ShowClient
 			HttpEntity<Show> request = new HttpEntity<>( show );
 
 			return restTemplate.exchange(
-					buildMusicalShowsBaseUrl( musicalId ).concat( "/shows" ),
+					buildMusicalShowsBaseUrl( musicalId ),
 					HttpMethod.POST,
 					request,
 					new ParameterizedTypeReference<Show>()
@@ -126,15 +126,15 @@ public class ShowClient
 		return null;
 	}
 
-	public List<Show> updateShowForMusical( MusicalId musicalId, Show show ) {
+	public Show updateShowForMusical( MusicalId musicalId, Show show ) {
 		try {
 			HttpEntity<Show> request = new HttpEntity<>( show );
 
 			return restTemplate.exchange(
-					buildMusicalShowsBaseUrl( musicalId ).concat( "/shows" ),
+					String.format( buildMusicalShowsBaseUrl( musicalId ).concat( "/%s" ), show.getId().getId() ),
 					HttpMethod.PUT,
 					request,
-					new ParameterizedTypeReference<List<Show>>()
+					new ParameterizedTypeReference<Show>()
 					{
 					} ).getBody();
 		}
@@ -150,6 +150,6 @@ public class ShowClient
 	}
 
 	private String buildMusicalShowsBaseUrl( MusicalId musicalId ) {
-		return String.format( musicalServiceUrl.concat( "/api/musicals/%s" ), musicalId.toString() );
+		return String.format( musicalServiceUrl.concat( "/api/musicals/%s" ), musicalId.getId() ).concat( "/shows" );
 	}
 }
