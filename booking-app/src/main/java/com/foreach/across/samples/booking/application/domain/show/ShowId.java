@@ -1,8 +1,6 @@
 package com.foreach.across.samples.booking.application.domain.show;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.foreach.across.samples.booking.application.domain.musical.MusicalIdDeserializer;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data

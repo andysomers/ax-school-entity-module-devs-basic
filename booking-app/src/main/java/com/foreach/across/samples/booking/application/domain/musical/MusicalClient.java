@@ -18,7 +18,7 @@ public class MusicalClient
 	private final String musicalServiceUrl;
 
 	@Autowired
-	public MusicalClient(@Value("${musicalService.url}") String musicalServiceUrl) {
+	public MusicalClient( @Value("${musicalService.url}") String musicalServiceUrl ) {
 		this.restTemplate = new RestTemplate();
 		this.musicalServiceUrl = musicalServiceUrl;
 	}
@@ -77,7 +77,7 @@ public class MusicalClient
 			HttpEntity<Musical> request = new HttpEntity<>( musical );
 
 			return restTemplate.exchange(
-					String.format(buildMusicalBaseUrl().concat("/%s"), musical.getId().getId()),
+					String.format( buildMusicalBaseUrl().concat( "/%s" ), musical.getId().getId() ),
 					HttpMethod.PUT,
 					request,
 					Musical.class ).getBody();

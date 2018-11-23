@@ -89,6 +89,6 @@ class MusicalUiConfiguration implements EntityConfigurer
 
 	@Autowired
 	public void registerConverter( FormattingConversionService mvcConversionService ) {
-		mvcConversionService.addConverter( MusicalId.class, String.class, MusicalId::getId );
+		mvcConversionService.addConverter( MusicalId.class, String.class, MusicalId::toString );
 	}
 }

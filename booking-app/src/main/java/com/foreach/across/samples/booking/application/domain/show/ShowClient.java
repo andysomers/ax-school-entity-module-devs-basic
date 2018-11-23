@@ -19,7 +19,7 @@ public class ShowClient
 	private final String musicalServiceUrl;
 
 	@Autowired
-	public ShowClient(@Value("${musicalService.url}") String musicalServiceUrl) {
+	public ShowClient( @Value("${musicalService.url}") String musicalServiceUrl ) {
 		this.restTemplate = new RestTemplate();
 		this.musicalServiceUrl = musicalServiceUrl;
 	}
@@ -150,6 +150,6 @@ public class ShowClient
 	}
 
 	private String buildMusicalShowsBaseUrl( MusicalId musicalId ) {
-		return String.format( musicalServiceUrl.concat( "/api/musicals/%s" ), musicalId.getId() );
+		return String.format( musicalServiceUrl.concat( "/api/musicals/%s" ), musicalId.toString() );
 	}
 }
