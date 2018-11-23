@@ -45,16 +45,15 @@ public class MusicalApiController {
         );
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
-    public ResponseEntity<MusicalDto> updateMusical(@RequestBody MusicalDto musicalDto) {
-        Musical musical = musicalRepository.findOne(musicalDto.getId());
-        musical.setName(musicalDto.getName());
-        musical.setDescription(musicalDto.getDescription());
+    @RequestMapping(method = RequestMethod.PUT, path = "/{id}")
+    public ResponseEntity<MusicalDto> updateMusical(@PathVariable Musical existingMusical, @RequestBody MusicalDto musicalDto) {
+        existingMusical.setName(musicalDto.getName());
+        existingMusical.setDescription(musicalDto.getDescription());
 
-        musical = musicalRepository.save(musical);
+        existingMusical = musicalRepository.save(existingMusical);
 
         return ResponseEntity.ok(
-                MusicalDto.from(musical)
+                MusicalDto.from(existingMusical)
         );
     }
 

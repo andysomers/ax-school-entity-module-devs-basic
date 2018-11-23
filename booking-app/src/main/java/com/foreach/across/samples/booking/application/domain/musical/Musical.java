@@ -1,6 +1,5 @@
 package com.foreach.across.samples.booking.application.domain.musical;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
