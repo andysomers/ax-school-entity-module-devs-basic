@@ -15,6 +15,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.client.RestClientException;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -24,6 +25,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
+import static org.assertj.core.api.Java6Assertions.assertThatThrownBy;
 
 @RunWith(SpringRunner.class)
 @TestPropertySource(properties = "musicalService.url=http://localhost:8099")
@@ -126,8 +128,8 @@ public class TestShowClient
 	@Test
 	public void deleteShow() throws JsonProcessingException {
 		showClient.deleteShow( existingShow.getId() );
-		assertThat( showClient.getShow( existingShow.getId() ) )
-				.isNull();
+		assertThatThrownBy( () -> showClient.getShow( existingShow.getId() ) )
+				.isInstanceOf( RestClientException.class );
 	}
 
 	private void assertForExistingShow( Show show ) {
