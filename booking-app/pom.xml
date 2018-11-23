@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<parent>
-        <artifactId>ax-school-entity-module-devs-basic</artifactId>
+		<artifactId>ax-school-entity-module-devs-basic</artifactId>
 		<groupId>com.foreach.across.samples</groupId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
@@ -27,6 +27,7 @@
 		<dependency>
 			<groupId>com.foreach.across.samples</groupId>
 			<artifactId>invoice-module</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -38,24 +39,4 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<goals>
-							<goal>repackage</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<executable>true</executable>
-					<excludeDevtools>true</excludeDevtools>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
 </project>
