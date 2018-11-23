@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.foreach.across.samples</groupId>
-	<artifactId>course-entity-basic</artifactId>
+	<artifactId>ax-school-entity-module-devs-basic</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<modules>
 		<module>musical-api</module>
-		<module>invoice</module>
+		<module>invoice-module</module>
 		<module>booking-app</module>
 	</modules>
 	<packaging>pom</packaging>
