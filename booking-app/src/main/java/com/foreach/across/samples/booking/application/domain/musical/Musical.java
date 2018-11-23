@@ -1,5 +1,6 @@
 package com.foreach.across.samples.booking.application.domain.musical;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.*;
 
 @Getter
@@ -9,11 +10,10 @@ import lombok.*;
 @Builder(toBuilder = true)
 public class Musical
 {
+	@Setter(AccessLevel.PRIVATE)
 	private MusicalId id;
-	private String name;
-	private String description;
 
-	public void setId( String id ) {
-		this.id = MusicalId.of( id );
-	}
+	private String name;
+
+	private String description;
 }
