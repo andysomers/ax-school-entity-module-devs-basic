@@ -77,7 +77,7 @@ public class MusicalClient
 			HttpEntity<Musical> request = new HttpEntity<>( musical );
 
 			return restTemplate.exchange(
-					buildMusicalBaseUrl(),
+					String.format(buildMusicalBaseUrl().concat("/%s"), musical.getId().getId()),
 					HttpMethod.PUT,
 					request,
 					Musical.class ).getBody();
