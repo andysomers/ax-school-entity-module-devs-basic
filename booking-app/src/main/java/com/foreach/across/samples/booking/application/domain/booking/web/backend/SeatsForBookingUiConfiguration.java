@@ -3,6 +3,8 @@ package com.foreach.across.samples.booking.application.domain.booking.web.backen
 import com.foreach.across.modules.entity.config.EntityConfigurer;
 import com.foreach.across.modules.entity.config.builders.EntitiesConfigurationBuilder;
 import com.foreach.across.modules.entity.registry.EntityAssociation;
+import com.foreach.across.modules.entity.views.ViewElementMode;
+import com.foreach.across.modules.entity.views.bootstrapui.EmbeddedCollectionOrMapElementBuilderFactory;
 import com.foreach.across.samples.booking.application.domain.booking.Booking;
 import com.foreach.across.samples.booking.application.domain.booking.Seat;
 import com.foreach.across.samples.booking.application.domain.booking.SeatRepository;
@@ -25,6 +27,7 @@ class SeatsForBookingUiConfiguration implements EntityConfigurer
 				        props -> props.property( "seats" )
 				                      .propertyType( TypeDescriptor.collection( List.class, TypeDescriptor.valueOf( Seat.class ) ) )
 				                      .valueFetcher( seatRepository::findByBookingOrderBySeatNumberAsc )
+				                      .viewElementType( ViewElementMode.VALUE, EmbeddedCollectionOrMapElementBuilderFactory.ELEMENT_TYPE )
 		        )
 		        .association(
 				        association -> association.name( "seat.booking" )

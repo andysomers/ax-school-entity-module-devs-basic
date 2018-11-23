@@ -6,12 +6,10 @@ import com.foreach.across.modules.entity.config.EntityConfigurer;
 import com.foreach.across.modules.entity.config.builders.EntitiesConfigurationBuilder;
 import com.foreach.across.modules.entity.config.builders.EntityPropertyRegistryBuilder;
 import com.foreach.across.modules.entity.query.EntityQueryConditionTranslator;
-import com.foreach.across.modules.entity.registry.properties.ConfigurableEntityPropertyController;
-import com.foreach.across.modules.entity.registry.properties.EntityPropertyController;
-import com.foreach.across.modules.entity.registry.properties.EntityPropertyHandlingType;
-import com.foreach.across.modules.entity.registry.properties.EntityPropertyValidator;
+import com.foreach.across.modules.entity.registry.properties.*;
 import com.foreach.across.modules.entity.views.EntityView;
 import com.foreach.across.modules.entity.views.EntityViewCustomizers;
+import com.foreach.across.modules.entity.views.bootstrapui.elements.ViewElementFieldset;
 import com.foreach.across.samples.booking.application.domain.booking.Booking;
 import com.foreach.across.samples.booking.application.domain.show.Show;
 import com.foreach.across.samples.booking.application.domain.show.ShowClient;
@@ -36,6 +34,7 @@ class BookingUiConfiguration implements EntityConfigurer
 
 	private final BookingListViewProcessor bookingListViewProcessor;
 	private final InvoiceViewProcessor invoiceViewProcessor;
+	private final BookingSummaryViewProcessor bookingSummaryViewProcessor;
 
 	@Override
 	public void configure( EntitiesConfigurationBuilder entities ) {
@@ -59,6 +58,7 @@ class BookingUiConfiguration implements EntityConfigurer
 				                      .property( "invoice" )
 				                      .hidden( true )
 				                      .attribute( EntityPropertyHandlingType.class, EntityPropertyHandlingType.BINDER )
+				                      .attribute( EntityAttributes.IS_EMBEDDED_OBJECT, true )
 				                      .controller( this::invoiceController )
 				                      .and()
 				                      .property( "followupList" ).hidden( true )
@@ -86,7 +86,16 @@ class BookingUiConfiguration implements EntityConfigurer
 				                             .andThen( fvb -> fvb.viewProcessor( invoiceViewProcessor ) )
 		        )
 		        .view(
-				        EntityView.SUMMARY_VIEW_NAME, vb -> vb.showProperties( "invoice.amount", "invoice.invoiceStatus", "invoice.invoiceDate" )
+				        EntityView.SUMMARY_VIEW_NAME,
+				        vb -> vb.showProperties( "invoice", "seats", "followupList" )
+				                .properties(
+						                props -> props.property( "invoice" )
+						                              .attribute( EntityAttributes.FIELDSET_PROPERTY_SELECTOR,
+						                                          EntityPropertySelector
+								                                          .of( "invoice.amount", "invoice.invoiceDate", "invoice.invoiceStatus" ) )
+						                              .attribute( ViewElementFieldset.TEMPLATE, ViewElementFieldset.TEMPLATE_PANEL_DEFAULT )
+				                )
+				                .viewProcessor( bookingSummaryViewProcessor )
 		        )
 		;
 	}
