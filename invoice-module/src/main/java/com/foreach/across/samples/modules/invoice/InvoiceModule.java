@@ -14,7 +14,7 @@ import java.util.Set;
         AcrossHibernateJpaModule.NAME
 })
 public class InvoiceModule extends AcrossModule {
-    public static final String NAME = "WebCmsModule";
+    public static final String NAME = "InvoiceModule";
 
     public InvoiceModule() {
     }
@@ -26,7 +26,7 @@ public class InvoiceModule extends AcrossModule {
 
     @Override
     public String getDescription() {
-        return "WebCmsModule exposes a Invoice entity.";
+        return "InvoiceModule exposes a Invoice entity.";
     }
 
     @Override
