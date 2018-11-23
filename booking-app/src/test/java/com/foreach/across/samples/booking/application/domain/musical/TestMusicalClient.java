@@ -12,7 +12,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -31,8 +30,7 @@ public class TestMusicalClient
 
 	@Before
 	public void setup() {
-		RestTemplate restTemplate = new RestTemplate();
-		musicalClient = new MusicalClient( restTemplate, environment.getProperty( "musicalService.url" ) );
+		musicalClient = new MusicalClient(environment.getProperty("musicalService.url"));
 
 		existingMusical = musicalClient.createMusical(
 				Musical.builder()

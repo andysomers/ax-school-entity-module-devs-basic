@@ -14,12 +14,12 @@ import java.util.List;
 @Component
 public class MusicalClient
 {
-	private final RestTemplate restTemplate;
+	private RestTemplate restTemplate;
 	private final String musicalServiceUrl;
 
 	@Autowired
-	public MusicalClient( RestTemplate restTemplate, @Value("${musicalService.url}") String musicalServiceUrl ) {
-		this.restTemplate = restTemplate;
+	public MusicalClient(@Value("${musicalService.url}") String musicalServiceUrl) {
+		this.restTemplate = new RestTemplate();
 		this.musicalServiceUrl = musicalServiceUrl;
 	}
 
