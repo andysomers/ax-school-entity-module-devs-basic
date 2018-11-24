@@ -31,11 +31,9 @@ class UserAuthenticationConfiguration
 	public void configureGlobal( AuthenticationManagerBuilder auth ) throws Exception {
 		auth.inMemoryAuthentication()
 		    .withUser( "booking" ).password( "booking" )
-		    .roles( "ADMIN" )
-		    .authorities( "access administration" )
+		    .authorities( "access administration", "booking-department" )
 		    .and()
 		    .withUser( "invoice" ).password( "invoice" )
-		    .roles( "FINANCE" )
-		    .authorities( "access administration" );
+		    .authorities( "access administration", "finance-department" );
 	}
 }

@@ -3,6 +3,7 @@ package com.foreach.across.samples.booking.application.domain.show;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.foreach.across.samples.booking.application.domain.musical.MusicalId;
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.annotation.Id;
 
@@ -32,5 +33,6 @@ public class Show
 	private String location;
 
 	@NotBlank
+	@Length(max = 50)
 	private String city;
 }
