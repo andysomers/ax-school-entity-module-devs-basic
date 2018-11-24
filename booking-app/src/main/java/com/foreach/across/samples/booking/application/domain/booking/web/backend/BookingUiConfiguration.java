@@ -1,9 +1,12 @@
 package com.foreach.across.samples.booking.application.domain.booking.web.backend;
 
 import com.foreach.across.modules.adminweb.menu.AdminMenuEvent;
+import com.foreach.across.modules.bootstrapui.components.builder.NavComponentBuilder;
+import com.foreach.across.modules.bootstrapui.elements.GlyphIcon;
 import com.foreach.across.modules.entity.EntityAttributes;
 import com.foreach.across.modules.entity.config.EntityConfigurer;
 import com.foreach.across.modules.entity.config.builders.EntitiesConfigurationBuilder;
+import com.foreach.across.modules.entity.config.builders.EntityConfigurationBuilder;
 import com.foreach.across.modules.entity.config.builders.EntityPropertyRegistryBuilder;
 import com.foreach.across.modules.entity.query.EntityQueryConditionTranslator;
 import com.foreach.across.modules.entity.registry.properties.*;
@@ -35,6 +38,7 @@ class BookingUiConfiguration implements EntityConfigurer
 	private final BookingListViewProcessor bookingListViewProcessor;
 	private final InvoiceViewProcessor invoiceViewProcessor;
 	private final BookingSummaryViewProcessor bookingSummaryViewProcessor;
+	private final AddFollowupViewProcessor addFollowupViewProcessor;
 
 	@Override
 	public void configure( EntitiesConfigurationBuilder entities ) {
@@ -97,7 +101,21 @@ class BookingUiConfiguration implements EntityConfigurer
 				                )
 				                .viewProcessor( bookingSummaryViewProcessor )
 		        )
-		;
+		        .and( this::configureAddFollowupView );
+	}
+
+	private void configureAddFollowupView( EntityConfigurationBuilder<Booking> builder ) {
+		builder.formView(
+				"addFollowup",
+				EntityViewCustomizers.basicSettings()
+				                     .adminMenu(
+						                     "/advanced-options/addFollowup",
+						                     e -> e.attribute( NavComponentBuilder.ATTR_ICON, new GlyphIcon( GlyphIcon.PAPERCLIP ) )
+						                           .attribute( NavComponentBuilder.ATTR_ICON_ONLY, true )
+				                     )
+				                     .andThen( EntityViewCustomizers.formSettings().forExtension( true ) )
+				                     .andThen( vb -> vb.viewProcessor( addFollowupViewProcessor ) )
+		);
 	}
 
 	private void invoiceController( ConfigurableEntityPropertyController<?, ?> controller ) {
