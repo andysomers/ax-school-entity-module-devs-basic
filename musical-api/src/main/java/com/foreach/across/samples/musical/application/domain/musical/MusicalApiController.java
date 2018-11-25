@@ -28,9 +28,10 @@ public class MusicalApiController
 	public ResponseEntity<MusicalDto> getMusicalById( @PathVariable UUID id ) {
 		Musical musical = musicalRepository.findOne( id );
 
-		return ResponseEntity.ok(
-				MusicalDto.from( musical )
-		);
+		if ( musical == null ) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok( MusicalDto.from( musical ) );
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
@@ -39,9 +40,7 @@ public class MusicalApiController
 
 		musical = musicalRepository.save( musical );
 
-		return ResponseEntity.ok(
-				MusicalDto.from( musical )
-		);
+		return ResponseEntity.ok( MusicalDto.from( musical ) );
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, path = "/{id}")
@@ -51,13 +50,12 @@ public class MusicalApiController
 
 		existingMusical = musicalRepository.save( existingMusical );
 
-		return ResponseEntity.ok(
-				MusicalDto.from( existingMusical )
-		);
+		return ResponseEntity.ok( MusicalDto.from( existingMusical ) );
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, path = "/{id}")
-	public void deleteMusicalById( @PathVariable UUID id ) {
+	public ResponseEntity deleteMusicalById( @PathVariable UUID id ) {
 		musicalRepository.delete( id );
+		return ResponseEntity.ok().build();
 	}
 }
