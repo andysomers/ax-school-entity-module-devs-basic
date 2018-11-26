@@ -2,6 +2,7 @@ package com.foreach.across.samples.booking.application.domain.booking.web.backen
 
 import com.foreach.across.modules.adminweb.menu.AdminMenuEvent;
 import com.foreach.across.modules.bootstrapui.components.builder.NavComponentBuilder;
+import com.foreach.across.modules.bootstrapui.elements.BootstrapUiBuilders;
 import com.foreach.across.modules.bootstrapui.elements.GlyphIcon;
 import com.foreach.across.modules.entity.EntityAttributes;
 import com.foreach.across.modules.entity.actions.EntityConfigurationAllowableActionsBuilder;
@@ -14,7 +15,10 @@ import com.foreach.across.modules.entity.query.EntityQueryConditionTranslator;
 import com.foreach.across.modules.entity.registry.properties.*;
 import com.foreach.across.modules.entity.views.EntityView;
 import com.foreach.across.modules.entity.views.EntityViewCustomizers;
+import com.foreach.across.modules.entity.views.ViewElementMode;
 import com.foreach.across.modules.entity.views.bootstrapui.elements.ViewElementFieldset;
+import com.foreach.across.modules.entity.views.util.EntityViewElementUtils;
+import com.foreach.across.modules.entity.web.links.EntityViewLinks;
 import com.foreach.across.modules.spring.security.actions.AllowableAction;
 import com.foreach.across.modules.spring.security.actions.AuthorityMatchingAllowableActions;
 import com.foreach.across.modules.spring.security.authority.AuthorityMatcher;
@@ -46,6 +50,8 @@ class BookingUiConfiguration implements EntityConfigurer
 	private final InvoiceViewProcessor invoiceViewProcessor;
 	private final BookingSummaryViewProcessor bookingSummaryViewProcessor;
 	private final AddFollowupViewProcessor addFollowupViewProcessor;
+
+	private final EntityViewLinks entityViewLinks;
 
 	@Override
 	public void configure( EntitiesConfigurationBuilder entities ) {
@@ -109,7 +115,14 @@ class BookingUiConfiguration implements EntityConfigurer
 				                )
 				                .viewProcessor( bookingSummaryViewProcessor )
 		        )
-		        .and( this::configureAddFollowupView );
+		        .and( this::configureAddFollowupView )
+		        .viewElementBuilder( ViewElementMode.LIST_VALUE, builderContext -> {
+			        Booking booking = EntityViewElementUtils.currentPropertyValue( builderContext, Booking.class );
+			        return BootstrapUiBuilders.link()
+			                                  .text( booking.getName() )
+			                                  .url( entityViewLinks.linkTo( booking ).toUriString() )
+			                                  .build( builderContext );
+		        } );
 	}
 
 	private EntityConfigurationAllowableActionsBuilder bookingAllowableActions() {
