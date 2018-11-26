@@ -55,7 +55,7 @@ public class Booking implements Persistable<Long>, EntityWithDto<Booking>
 
 	private ZonedDateTime created;
 
-	@ManyToOne
+	@OneToOne
 	private Invoice invoice;
 
 	@ElementCollection
