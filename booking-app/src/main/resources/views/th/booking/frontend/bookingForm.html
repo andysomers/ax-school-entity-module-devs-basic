@@ -6,7 +6,7 @@
 
 <h1>Book tickets for our musical</h1>
 
-<form th:action="@{/}" method="post" th:object="${booking}">
+<form th:action="@{/}" method="post" th:object="${booking}" novalidate>
 
     <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
         <p th:each="e : ${#fields.detailedErrors()}" th:class="${e.global}? globalerr : fielderr">
@@ -29,7 +29,8 @@
         <select id="ticketType" class="form-control" th:field="*{ticketType}">
             <option th:each="type : ${ticketTypes}"
                     th:value="${type}"
-                    th:text="#{${'ticketType.' + type}}">Wireframe</option>
+                    th:text="#{${'ticketType.' + type}}">Wireframe
+            </option>
         </select>
 
     </div>

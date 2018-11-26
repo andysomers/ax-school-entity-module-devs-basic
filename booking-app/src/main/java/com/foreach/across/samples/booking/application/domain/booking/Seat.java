@@ -1,9 +1,7 @@
 package com.foreach.across.samples.booking.application.domain.booking;
 
 import com.foreach.across.modules.hibernate.business.EntityWithDto;
-import com.foreach.across.samples.booking.application.domain.show.ShowId;
 import lombok.*;
-import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.data.domain.Persistable;
@@ -11,14 +9,9 @@ import org.springframework.data.domain.Persistable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
-import java.time.ZonedDateTime;
 
-/**
- * A single show booking.
- */
 @Entity
 @Builder(toBuilder = true)
 @Getter
@@ -26,36 +19,25 @@ import java.time.ZonedDateTime;
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode(of = "id")
-public class Booking implements Persistable<Long>, EntityWithDto<Booking>
+public class Seat implements Persistable<Long>, EntityWithDto<Seat>
 {
 	@Id
 	@GeneratedValue
 	private Long id;
 
 	@NotNull
-	private ShowId showId;
-
-	@NotBlank
-	@Length(max = 255)
-	private String name;
-
-	@NotBlank
-	@Email
-	@Length(max = 255)
-	private String email;
-
-	@Min(1)
-	@Max(10)
-	@Builder.Default
-	private int numberOfTickets = 1;
+	@ManyToOne
+	private Booking booking;
 
 	@NotNull
 	private TicketType ticketType;
 
-	private ZonedDateTime created;
+	@NotBlank
+	@Length(max = 5)
+	private String seatNumber;
 
 	@Override
-	public Booking toDto() {
+	public Seat toDto() {
 		return toBuilder().build();
 	}
 

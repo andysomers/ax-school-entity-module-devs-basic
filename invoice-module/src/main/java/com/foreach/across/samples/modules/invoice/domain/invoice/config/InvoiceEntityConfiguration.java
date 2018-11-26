@@ -8,13 +8,14 @@ import org.springframework.context.annotation.Configuration;
 import java.util.Currency;
 
 @Configuration
-public class InvoiceEntityConfiguration implements EntityConfigurer {
-    @Override
-    public void configure(EntitiesConfigurationBuilder entities) {
-        entities.withType(Invoice.class)
-                .properties(props -> props
-                        .property("#label").spelValueFetcher("'invoice-' + id").and()
-                        .property("amount").attribute(Currency.class, Currency.getInstance("EUR"))
-                );
-    }
+public class InvoiceEntityConfiguration implements EntityConfigurer
+{
+	@Override
+	public void configure( EntitiesConfigurationBuilder entities ) {
+		entities.withType( Invoice.class )
+		        .properties( props -> props
+				        .property( "#label" ).spelValueFetcher( "'invoice-' + id" ).and()
+				        .property( "amount" ).attribute( Currency.class, Currency.getInstance( "EUR" ) )
+		        );
+	}
 }

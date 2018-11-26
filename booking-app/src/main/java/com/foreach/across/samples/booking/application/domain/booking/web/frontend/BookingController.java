@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.time.ZonedDateTime;
+
 @Controller
 @Template(FrontendLayout.TEMPLATE)
 @RequestMapping("/")
@@ -39,6 +41,8 @@ class BookingController
 		if ( errors.hasErrors() ) {
 			return bookingForm( booking, model );
 		}
+
+		booking.setCreated( ZonedDateTime.now() );
 
 		bookingRepository.save( booking );
 

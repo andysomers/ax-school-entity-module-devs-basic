@@ -18,51 +18,52 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
-public class Invoice extends SettableIdBasedEntity<Invoice> {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_sample_invoice_id")
-    @GenericGenerator(
-            name = "seq_sample_invoice_id",
-            strategy = AcrossSequenceGenerator.STRATEGY,
-            parameters = {
-                    @org.hibernate.annotations.Parameter(name = "sequenceName", value = "seq_sample_invoice_id"),
-                    @org.hibernate.annotations.Parameter(name = "allocationSize", value = "1")
-            }
-    )
-    private Long id;
+public class Invoice extends SettableIdBasedEntity<Invoice>
+{
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO, generator = "seq_sample_invoice_id")
+	@GenericGenerator(
+			name = "seq_sample_invoice_id",
+			strategy = AcrossSequenceGenerator.STRATEGY,
+			parameters = {
+					@org.hibernate.annotations.Parameter(name = "sequenceName", value = "seq_sample_invoice_id"),
+					@org.hibernate.annotations.Parameter(name = "allocationSize", value = "1")
+			}
+	)
+	private Long id;
 
-    @NotNull
-    @Column(name = "amount")
-    private Double amount;
+	@NotNull
+	@Column(name = "amount")
+	private Double amount;
 
-    @NotBlank
-    @Column(name = "name")
-    @Length(max = 255)
-    private String name;
+	@NotBlank
+	@Column(name = "name")
+	@Length(max = 255)
+	private String name;
 
-    @NotBlank
-    @Column(name = "email")
-    @Length(max = 255)
-    private String email;
+	@NotBlank
+	@Column(name = "email")
+	@Length(max = 255)
+	private String email;
 
-    @Column(name = "vat_number")
-    @Length(max = 255)
-    private String vatNumber;
+	@Column(name = "vat_number")
+	@Length(max = 255)
+	private String vatNumber;
 
-    @NotNull
-    @Column(name = "invoiceDate")
-    private LocalDate invoiceDate;
+	@NotNull
+	@Column(name = "invoiceDate")
+	private LocalDate invoiceDate;
 
-    @NotNull
-    @Column(name = "invoice_status")
-    private InvoiceStatus invoiceStatus;
+	@NotNull
+	@Column(name = "invoice_status")
+	private InvoiceStatus invoiceStatus;
 
-    /**
-     * Create a label used by EntityModule
-     *
-     * @return String
-     */
-    public String getLabel() {
-        return "invoice-" + this.getId();
-    }
+	/**
+	 * Create a label used by EntityModule
+	 *
+	 * @return String
+	 */
+	public String getLabel() {
+		return "invoice-" + this.getId();
+	}
 }

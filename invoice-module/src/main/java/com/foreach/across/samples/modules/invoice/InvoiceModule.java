@@ -10,27 +10,28 @@ import com.foreach.across.modules.hibernate.jpa.AcrossHibernateJpaModule;
 import java.util.Set;
 
 @AcrossDepends(required = {
-        EntityModule.NAME,
-        AcrossHibernateJpaModule.NAME
+		EntityModule.NAME,
+		AcrossHibernateJpaModule.NAME
 })
-public class InvoiceModule extends AcrossModule {
-    public static final String NAME = "InvoiceModule";
+public class InvoiceModule extends AcrossModule
+{
+	public static final String NAME = "InvoiceModule";
 
-    public InvoiceModule() {
-    }
+	public InvoiceModule() {
+	}
 
-    @Override
-    public String getName() {
-        return NAME;
-    }
+	@Override
+	public String getName() {
+		return NAME;
+	}
 
-    @Override
-    public String getDescription() {
-        return "InvoiceModule exposes a Invoice entity.";
-    }
+	@Override
+	public String getDescription() {
+		return "An example invoice entity.";
+	}
 
-    @Override
-    protected void registerDefaultApplicationContextConfigurers(Set<ApplicationContextConfigurer> contextConfigurers) {
-        contextConfigurers.add(ComponentScanConfigurer.forAcrossModule(InvoiceModule.class));
-    }
+	@Override
+	protected void registerDefaultApplicationContextConfigurers( Set<ApplicationContextConfigurer> contextConfigurers ) {
+		contextConfigurers.add( ComponentScanConfigurer.forAcrossModule( InvoiceModule.class ) );
+	}
 }

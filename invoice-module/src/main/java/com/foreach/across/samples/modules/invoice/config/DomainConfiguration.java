@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ComponentScan(basePackageClasses = InvoiceModule.class)
 @EnableAcrossJpaRepositories(basePackageClasses = InvoiceDomain.class)
-public class DomainConfiguration {
+public class DomainConfiguration
+{
 
 }
