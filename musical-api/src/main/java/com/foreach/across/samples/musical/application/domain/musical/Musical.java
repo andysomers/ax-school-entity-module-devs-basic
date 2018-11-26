@@ -1,9 +1,5 @@
 package com.foreach.across.samples.musical.application.domain.musical;
 
-import com.foreach.across.modules.hibernate.business.EntityWithDto;
-import com.foreach.across.modules.hibernate.business.SettableIdBasedEntity;
-import com.foreach.across.modules.hibernate.id.AcrossSequenceGenerator;
-import com.foreach.across.modules.hibernate.util.DtoUtils;
 import com.foreach.across.samples.musical.application.domain.show.Show;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -23,46 +19,47 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
-public class Musical implements Persistable<UUID> {
-    @Id
-    @GeneratedValue(generator = "seq_sample_music_uuid")
-    @GenericGenerator(
-            name = "seq_sample_music_uuid",
-            strategy = "org.hibernate.id.UUIDGenerator"
-    )
-    @Column(name = "id", length=16, updatable = false, nullable = false)
-    private UUID id;
+public class Musical implements Persistable<UUID>
+{
+	@Id
+	@GeneratedValue(generator = "seq_sample_music_uuid")
+	@GenericGenerator(
+			name = "seq_sample_music_uuid",
+			strategy = "org.hibernate.id.UUIDGenerator"
+	)
+	@Column(name = "id", length = 16, updatable = false, nullable = false)
+	private UUID id;
 
-    @NotBlank
-    @Length(max = 200)
-    @Column(name = "name")
-    private String name;
+	@NotBlank
+	@Length(max = 200)
+	@Column(name = "name")
+	private String name;
 
-    @Length(max = 2000)
-    @Column(name = "description")
-    private String description;
+	@Length(max = 2000)
+	@Column(name = "description")
+	private String description;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "musical")
-    private List<Show> shows;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "musical")
+	private List<Show> shows;
 
-    public final boolean isNew() {
-        return getId() == null || getId().equals("");
-    }
+	public final boolean isNew() {
+		return getId() == null || getId().equals( "" );
+	}
 
-    public boolean equals( Musical o ) {
-        if ( this == o ) {
-            return true;
-        }
+	public boolean equals( Musical o ) {
+		if ( this == o ) {
+			return true;
+		}
 
-        if ( isNew() ) {
-            return false;
-        }
+		if ( isNew() ) {
+			return false;
+		}
 
-        return Objects.equals( getId(), o.getId() );
-    }
+		return Objects.equals( getId(), o.getId() );
+	}
 
-    @Override
-    public int hashCode() {
-        return isNew() ? super.hashCode() : Objects.hash( getId() );
-    }
+	@Override
+	public int hashCode() {
+		return isNew() ? super.hashCode() : Objects.hash( getId() );
+	}
 }

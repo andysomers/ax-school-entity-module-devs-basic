@@ -18,6 +18,6 @@ public class EntityScanConfiguration implements HibernatePackageConfigurer
 {
 	@Override
 	public void configureHibernatePackage( HibernatePackageRegistry hibernatePackageRegistry ) {
-		
+
 	}
 }

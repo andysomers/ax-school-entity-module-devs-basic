@@ -2,7 +2,6 @@ package com.foreach.across.samples.booking.application.domain.musical;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.After;
 import org.junit.Before;
@@ -43,7 +42,7 @@ public class TestMusicalClient
 
 		existingMusical = musicalClient.createMusical(
 				Musical.builder()
-				       .id( new MusicalId( UUID.randomUUID().toString() ) )
+				       .id( MusicalId.of( UUID.randomUUID().toString() ) )
 				       .name( "Winter wonderland" )
 				       .description( "Winterland description" )
 				       .build()
@@ -51,7 +50,7 @@ public class TestMusicalClient
 	}
 
 	@After
-	public void cleanUp(){
+	public void cleanUp() {
 		musicalClient.deleteMusical( existingMusical.getId() );
 	}
 

@@ -7,15 +7,16 @@ import com.foreach.across.modules.web.AcrossWebModule;
 import org.springframework.boot.SpringApplication;
 
 @AcrossApplication(
-        modules = {
-                AcrossWebModule.NAME,
-                AcrossHibernateJpaModule.NAME,
-                EntityModule.NAME
-        }
+		modules = {
+				AcrossWebModule.NAME,
+				AcrossHibernateJpaModule.NAME,
+				EntityModule.NAME
+		}
 )
-public class MusicalApiApplication {
-        public static void main( String[] args ) {
-                SpringApplication springApplication = new SpringApplication(MusicalApiApplication.class);
-                springApplication.run( args );
-        }
+public class MusicalApiApplication
+{
+	public static void main( String[] args ) {
+		SpringApplication springApplication = new SpringApplication( MusicalApiApplication.class );
+		springApplication.run( args );
+	}
 }
